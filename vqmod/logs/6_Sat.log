@@ -1,0 +1,15 @@
+---------- Date: 2014-11-08 11:36:20 ~ IP : 124.40.247.198 ----------
+REQUEST URI : /schooldhool/admin/index.php?route=module/kuler_showcase&amp;token=132247a8a94c4d16eec9a9b17f56c5d6
+MOD DETAILS:
+   modFile   : C:\xampp\htdocs\schooldhool\vqmod/xml/kulerthemes_cp.xml
+   id        : KulerThemes
+   version   : 
+   vqmver    : 
+   author    : kulerthemes.com
+
+File Name    : admin/view/template/module/*.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): html += '      <option value="content_top"><?php echo $text_content_top; ?></option>';
+
+----------------------------------------------------------------------
+
+

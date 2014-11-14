@@ -1,0 +1,136 @@
+@import (reference) "elements";
+/*--------------------------------------------
+Skin 1
+----------------------------------------------*/
+.skin3{
+	.kuler-slides .jcarousel-skin-opencart {
+		border-top: 3px solid #313133;
+	}
+	.jcarousel-skin-opencart {
+		background-color: #fff;
+		border-top: 3px solid #313133;
+	}
+	#footer .container {
+		padding: 0 30px;
+		>.row{
+			background-color: #fff;
+		}
+	}
+	#footer .col-sm-6:before {
+		content: '';
+		background-color: #EEEEEE;
+		width: 1px;
+		height: 1000px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 2;
+	}
+	.box-heading{
+		font-size: 15px;
+		font-weight: 500;
+		text-transform: uppercase;
+		.rounded(0);
+		letter-spacing: 2px;
+		span{
+			background-color: @skin1-bg;
+			color: #ffffff;
+			display: inline-block;
+			padding: 18px 25px;
+			position: relative;
+			&:before{
+				content: '';
+				background: @skin1;
+				width: 3px;
+				height: 25px;
+				position: absolute;
+				left: 0;
+			}
+		}
+	}
+	.kuler-showcase-module .tab-heading span{
+		background-color: #fff;
+		color: #313133;
+	}
+	.kuler-showcase-module .tab-heading .active {
+		background-color: #313133;
+		color: #ffffff;
+	}
+	.sidebar .box-heading span{
+		display: block;
+	}
+	.vertical-menu .box-heading span {
+		padding: 10px 20px;
+		display: block;
+		text-align: left;
+		background-color: #fff;
+		color: #222;
+	}
+	.kuler-showcase-module .box-content {
+		border-top: 3px solid #313133;
+		text-align: center;
+	}
+	.kuler-slides .jcarousel-skin-opencart {
+		border-top: 3px solid #313133;
+	}
+	.categories .box-heading span{
+		background-color: #fff;
+		color: #313133;
+	}
+	.category-list ul {
+		background-color: #fff;
+		border: none;
+	}
+}
+@media @lg { //1200px
+	.skin3{
+		/*logo*/
+		#logo{
+			&:before,&:after{
+				content: '';
+				width: 1px;
+				height: 220px;
+				background-color: #EEEEEE;
+				position: absolute;
+				left: 0;
+				top: -100px;
+			}
+			&:after{
+				left: auto;
+				right: -30px;
+			}
+		}
+		.kuler-tabs .kuler-tabs-content {
+			background-color: #fff;
+			border-top: 3px solid #313133;
+		}
+		.kuler-tabs{
+			.box-heading{
+				a{
+					color: @skin1-bg;
+					font-weight: 400;
+					text-transform: uppercase;
+					float: none;
+					font-size: 15px;
+					padding: 18px 22px;
+					position: relative;
+					background-color: #fff;
+					display: inline-block;
+					&:before{
+						content: '';
+						background: #82D5DB;
+						width: 3px;
+						height: 25px;
+						position: absolute;
+						left: 0;
+					}
+				}
+			}
+		}
+		.showcase{
+			.col-lg-80 .product-grid{
+				margin: 0 -15px;
+			}
+		}
+	}
+}

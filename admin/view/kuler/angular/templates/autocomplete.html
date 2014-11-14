@@ -1,0 +1,9 @@
+<div class="ms-container">
+	<div class="ms-selectable">
+		<input type="text" class="form-control search-input" autocomplete="off" placeholder="{{'text_search_placeholder' | _t:'Search ...'}}" ui-autocomplete="options" ng-model="input">
+		<span class="wait" ng-if="itemsLoading" style="position: relative; top: 25px; left: 10px;"><img src="view/image/loading.gif" /></span>
+		<ul class="ms-list">
+			<li class="ms-elem-selectable" ng-repeat="item in items"><span><a href="{{item.link}}">{{item.name}}</a></span> <span class="item-remover" ng-click="removeItem($index)" tooltip="{{'text_remove' | _t:'Remove'}}" tooltip-placement="left"><i class="fa fa-minus-circle"></i></span></li>
+		</ul>
+	</div>
+</div>

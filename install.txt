@@ -1,0 +1,21 @@
+Make sure you have VQMOD installed! If you don’t already, download for free from here: 
+https://code.google.com/p/vqmod/
+
+You also need a Textplode account to use this module. Register for free at:
+http://www.textplode.com/register
+
+1. Copy all files directly to your OpenCart root folder.
+
+2. Go to your OpenCart administration, module then install the Textplode module.
+
+3. Click edit and enter your API key into the required field. You can get your API key by going to your settings page on Textplode which can be found here: 
+http://www.textplode.com/settings (click ‘Generate API key’)
+
+4. Configure the module and enable it!
+
+Any bug reports or general enquiries: hello@textplode.com
+
+Thank you for using our module!
+
+-
+The Textplode team

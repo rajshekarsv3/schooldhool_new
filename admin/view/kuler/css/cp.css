@@ -1,0 +1,204 @@
+/* =========================== MAIN ACTIONS =========================== */
+
+#theme-version {
+    font-size: 10px;
+}
+
+.main-actions .input-group {
+    margin-right: 10px;
+    width: 300px;
+    float: left;
+}
+
+/* =========================== CUSTOMIZATION PANEL =========================== */
+#panel-styles {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: none;
+}
+
+#panel-styles.active {
+    display: block;
+}
+
+.style-panel-loading {
+    margin-top: 20px;
+    width: 100%;
+    height: 40px;
+    background: url('../image/loading.gif') no-repeat center center;
+    background-size: contain;
+}
+
+#customize-controls {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 100%;
+    background: #EEE;
+    border-right: 1px solid #DDD;
+    padding: 0;
+}
+
+#customize-controls.hiding {
+    left: -300px;
+}
+
+#customize-controls .form-horizontal .form-group {
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #dedede;
+}
+
+#customize-controls .form-horizontal .form-group:last-child {
+    border-bottom: none;
+}
+
+#customize-controls select {
+    width: 200px;
+}
+
+#customize-controls .color-picker-input {
+    width: 150px;
+    color: #fff;
+}
+
+#customize-controls .panel-group .panel {
+    border-radius: 0;
+}
+
+#customize-controls-actions {
+    position: absolute;
+    top: 0;
+}
+
+#customize-controls-container {
+    margin-top: 50px;
+    height: calc(100% - 100px);
+    border-top: 1px solid #DDD;
+    overflow: auto;
+}
+
+#customize-controls-actions {
+    width: 100%;
+    padding: 5px;
+}
+
+#customize-controls-second-actions {
+    height: 50px;
+    padding: 15px;
+}
+
+#customize-controls.hiding #customize-controls-second-actions .btn-collapse {
+    position: fixed;
+    left: 10px;
+}
+
+#customize-controls.hiding #customize-controls-second-actions .btn-collapse .btn-collapse-text {
+    display: none;
+}
+
+#customize-controls-second-actions .btn-collapse {
+    cursor: pointer;
+}
+
+#customize-controls-actions .btn-save {
+    float: right;
+}
+
+#customize-controls-container .panel-title {
+    color: #555;
+}
+
+#customize-controls-container .control-label {
+    display: block;
+    text-align: left;
+    font-size: 12px;
+}
+
+.image-selector-container .thumbnail {
+    padding: 2px;
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.image-selector-container select {
+    width: 150px;
+}
+
+#customize-preview {
+    margin-left: 300px;
+}
+
+#customize-controls-container .panel-heading {
+    cursor: pointer;
+}
+
+#customize-controls-container .panel .panel-collapse {
+    height: 0;
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+}
+
+#customize-controls.hiding + #customize-preview {
+    margin-left: 0;
+}
+
+#panel-styles .row, #panel-styles .row .col-sm-12, #customize-preview {
+    height: inherit;
+}
+
+#customize-preview iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.pattern-list li {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 3px 4px;
+    border: solid 1px #999;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.pattern-list li.active {
+    border-color: red;
+}
+
+#customize-controls .panel .panel-heading {
+    border-radius: 0px;
+}
+
+#customize-controls .panel.active .panel-heading {
+    background-color: #ddd;
+
+}
+
+#customize-controls .panel .panel-heading h4 {
+    color: #111;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#customize-controls .panel.active .panel-heading h4 {
+    color: #333;
+}
+
+#customize-controls .form-horizontal .form-group {
+    margin-top: 10px;
+}
+
+.panel-toggle {
+    float: right;
+}

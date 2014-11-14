@@ -1,0 +1,73 @@
+---------- Date: 2014-10-08 00:35:37 ~ IP : 220.225.84.105 ----------
+REQUEST URI : /zoneshop/1/admin/index.php?route=module/kuler_cp&amp;token=609fcd42d874af696f7334a120104fb9
+MOD DETAILS:
+   modFile   : /home/kladmin/public_html/demo.kulerthemes/zoneshop/1/vqmod/xml/kulerthemes_hotfix_ckeditor_is_not_working_in_kuler_cp.xml
+   id        : KulerThemes - Hotfix - Ckeditor is not working in Kuler CP
+   version   : 
+   vqmver    : 
+   author    : kulerthemes.com
+
+File Name    : admin/view/template/module/kuler_cp/functions.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): $html .= "<textarea editor ng-model=\"options.{$options['name']}\" ng-init=\"{$parent_input} = {$parent_input} ? {$parent_input} : {}\" class=\"form-control\"></textarea>";
+----------------------------------------------------------------------
+
+
+---------- Date: 2014-10-08 00:44:24 ~ IP : 109.253.100.2 ----------
+REQUEST URI : /zoneshop/1/admin/index.php?route=module/kuler_cp&amp;token=8807a9cb54bce835061863478c92439f
+MOD DETAILS:
+   modFile   : /home/kladmin/public_html/demo.kulerthemes/zoneshop/1/vqmod/xml/kulerthemes_hotfix_ckeditor_is_not_working_in_kuler_cp.xml
+   id        : KulerThemes - Hotfix - Ckeditor is not working in Kuler CP
+   version   : 
+   vqmver    : 
+   author    : kulerthemes.com
+
+File Name    : admin/view/template/module/kuler_cp/functions.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): $html .= "<textarea editor ng-model=\"options.{$options['name']}\" ng-init=\"{$parent_input} = {$parent_input} ? {$parent_input} : {}\" class=\"form-control\"></textarea>";
+----------------------------------------------------------------------
+
+
+---------- Date: 2014-10-08 01:51:45 ~ IP : 58.187.86.227 ----------
+REQUEST URI : /zoneshop/1/admin/index.php?route=module/kuler_demo_builder&amp;token=efa83ecaeb9243c7b737d21ab37197a0
+MOD DETAILS:
+   modFile   : /home/kladmin/public_html/demo.kulerthemes/zoneshop/1/vqmod/xml/kulerthemes_cp.xml
+   id        : KulerThemes
+   version   : 
+   vqmver    : 
+   author    : kulerthemes.com
+
+File Name    : admin/view/template/module/*.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): html += '      <option value="content_top"><?php echo $text_content_top; ?></option>';
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2014-10-08 03:15:16 ~ IP : 58.187.86.227 ----------
+REQUEST URI : /zoneshop/1/admin/index.php?route=module/kuler_demo_builder&amp;token=4d3db081ff0d4d0d7c76cd000b435294
+MOD DETAILS:
+   modFile   : /home/kladmin/public_html/demo.kulerthemes/zoneshop/1/vqmod/xml/kulerthemes_cp.xml
+   id        : KulerThemes
+   version   : 
+   vqmver    : 
+   author    : kulerthemes.com
+
+File Name    : admin/view/template/module/*.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): html += '      <option value="content_top"><?php echo $text_content_top; ?></option>';
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2014-10-08 03:38:13 ~ IP : 58.187.86.227 ----------
+REQUEST URI : /zoneshop/1/admin/index.php?route=module/kuler_demo_builder&amp;token=4d3db081ff0d4d0d7c76cd000b435294
+MOD DETAILS:
+   modFile   : /home/kladmin/public_html/demo.kulerthemes/zoneshop/1/vqmod/xml/kulerthemes_cp.xml
+   id        : KulerThemes
+   version   : 
+   vqmver    : 
+   author    : kulerthemes.com
+
+File Name    : admin/view/template/module/*.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (ABORTING MOD): html += '      <option value="content_top"><?php echo $text_content_top; ?></option>';
+
+----------------------------------------------------------------------
+
+

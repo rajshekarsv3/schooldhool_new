@@ -1,0 +1,58 @@
+<div class="kuler-tabs">
+	<div class="box kuler-module">
+		<?php if($show_title) { ?>
+			<div class="box-heading"><span><?php echo $module_title; ?></span></div>
+		<?php } ?>
+		<?php $tab_count = 1; ?>
+		<?php $tabcontent_count = 1; ?>
+		<div id="kulertabs<?php echo $module + 1 ?>">
+			<?php $tabsHtml = ''; ?>
+			<?php foreach ($products as $key => $tabs) { ?>
+				<?php $setting = $settings['tabs'][$key]; // Current tab information ?>
+				<?php if($setting['tab_title'] && (!isset($setting['status']) || $setting['status']) && (!isset($setting['show_title']) || $setting['show_title'])) : ?>
+					<?php $tabsHtml .= '<li><a href="#kuler-tab-'. ($module + 1) . '-' . $tab_count . '">'. $setting['tab_title'] . '</span></a></li>'; ?>
+					<?php $tab_count++; ?>
+				<?php endif ?>
+			<?php } ?>
+		
+			<?php if ($tabsHtml) { ?>
+			<div class="title">
+				<ul class="box-heading module-nav-list">
+					<?php echo $tabsHtml; ?>
+					<li class="btn-tabs-toggle"></li>
+				</ul>
+			</div>
+			<?php } ?>
+
+			<?php foreach ($products as $key => $tab_products) { ?>
+				<?php $setting = $settings['tabs'][$key]; // Current tab settings ?>
+				<?php if (!isset($setting['status']) || $setting['status']) { ?>
+					<div id="kuler-tab-<?php echo $module + 1; ?>-<?php echo $tabcontent_count; ?>" class="kuler-tabs-content">
+						<div class="box-product product-grid">
+							<?php foreach ($tab_products as $product) { ?>
+								<?php echo $this->loadChromeTemplate($setting, $product); ?>
+							<?php } ?>
+						</div>
+					</div>
+					<?php $tabcontent_count++; ?>
+				<?php } ?>
+			<?php } ?>
+		</div>
+	</div>
+</div>
+<?php if ($tabsHtml) { ?>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".kuler-tabs").tabs();
+
+    $('#kulertabs<?php echo $module + 1 ?> .btn-tabs-toggle').toggle(
+        function() {
+            $(this).parent().removeClass('collapse').addClass('expand').find('.ui-state-default').slideDown();
+        },
+        function() {
+            $(this).parent().removeClass('expand').addClass('collapse').find('.ui-state-default:not(.ui-state-active)').slideUp();
+        }
+    );
+});
+</script>
+<?php } ?>

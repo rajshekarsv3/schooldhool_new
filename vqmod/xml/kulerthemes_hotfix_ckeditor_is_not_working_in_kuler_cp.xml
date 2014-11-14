@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>KulerThemes - Hotfix - Ckeditor is not working in Kuler CP</id>
+	<author>kulerthemes.com</author>
+
+	<file path="admin/view/template/module/kuler_cp/index.tpl">
+		<operation>
+			<search position="replace"><![CDATA[<?php include_once('functions.tpl'); ?>]]></search>
+			<add><![CDATA[<?php include_once(VQMod::modCheck(DIR_TEMPLATE . '/module/kuler_cp/functions.tpl')); ?>]]></add>
+		</operation>
+	</file>
+	
+	<file path="admin/view/template/module/kuler_cp/functions.tpl">
+		<operation>
+			<search position="replace"><![CDATA[$html .= "<textarea editor ng-model=\"options.{$options['name']}\" ng-init=\"{$parent_input} = {$parent_input} ? {$parent_input} : {}\" class=\"form-control\"></textarea>";]]></search>
+			<add><![CDATA[$html .= "<textarea editor ng-model=\"options.{$options['name']}\" ng-init=\"options.{$parent_input} = options.{$parent_input} ? options.{$parent_input} : {}\" class=\"form-control\"></textarea>";]]></add>
+		</operation>
+	</file>
+
+</modification>

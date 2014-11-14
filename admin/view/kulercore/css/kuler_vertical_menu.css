@@ -1,0 +1,46 @@
+.box > .content {
+    background: none;
+}
+
+#tab-menu {
+    width: 100%;
+    background: url(../images/backgrounds/bg-faux-column.png) -50px top repeat-y;
+    overflow: hidden;
+    margin-top: -16px;
+    float: left;
+}
+
+#extension-setting {
+    background-color: #dedede;
+}
+
+#extension-status {
+    float: right;
+}
+
+#extension-status .form {
+    margin-bottom: 0;
+}
+
+#navigations {
+    padding: 15px 15px 0;
+    background-color: #fff;
+}
+
+#main-tabs {
+    padding-left: 300px;
+}
+
+#main-tabs a {
+    text-transform: uppercase;
+}
+
+#tab-module-placement {
+    padding-bottom: 15px;
+    background-color: #fff;
+}
+
+#tab-module-placement .list {
+    width: 80%;
+    margin: 0 auto;
+}

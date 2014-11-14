@@ -1,0 +1,128 @@
+@import (reference) "elements";
+/*--------------------------------------------
+RTL Support
+----------------------------------------------*/
+.vertical-menu .mainmenu li img{
+	float: right;
+}
+.box-category > li > .toggle{
+	right: auto;
+	left: 0;
+}
+.product-grid .inf{
+	text-align: right;
+}
+.product-grid > div{
+	text-align: right;
+}
+.skin1,.skin2,.skin3{
+	.kuler-showcase-module .nav span,
+	.jcarousel-skin-opencart .jcarousel-prev,
+	.jcarousel-skin-opencart .jcarousel-next{
+		right: auto;
+		left: 0;
+	}
+	.kuler-showcase-module .nav span.prev,
+	.jcarousel-skin-opencart .jcarousel-prev{
+		right: auto;
+		left: 33px;
+	}
+}
+.kuler-tabs .box-heading li{
+	margin-right: 0;
+	margin-left: 4px;
+}
+.box-heading span:before{
+	left: auto;
+	right: 0;
+}
+.vertical-menu .box-heading {
+	background-color: #fff;
+}
+.vertical-menu .box-heading span{
+	background-color: #fff;
+	color: #313133;
+}
+.vertical-menu .box-heading span:after{
+	float: right;
+	margin-left: 5px;
+}
+.megamenu .mainmenu > li{
+	text-align: right;
+}
+.shop-by-cat .col-md-3 img{
+	float: left;
+}
+.header-extra-info i{
+	float: right;
+}
+.sidebar .box-heading,
+.skin1 .vertical-menu .box-heading span{
+	text-align: right;
+}
+@media @md {
+	.inf .col-md-2{
+		border-left: none;
+		border-right: 1px solid #EEEEEE;
+	}
+	.newsletter,
+	.payment{
+		text-align: left;
+	}
+}
+@media @lg {
+	.megamenu .mainmenu > .category .dropdown-container {
+		width: 292px;
+	}
+	.vertical-menu .mainmenu li .icon{
+		float: right;
+	}
+	#top-bar .col-lg-12{
+		border-left: 1px solid transparent;
+		border-right: none;
+	}
+	.skin1,.skin3 {
+		#logo:before{
+			left: -30px;
+		}
+		#logo:after{
+			right: 0;
+		}
+	}
+	#top-bar .col-lg-5{
+		text-align: left;
+		border-right: none;
+		border-left: 1px solid transparent;
+	}
+	#top-bar .links{
+		padding-right: 15px;
+		padding-left: 0;
+	}
+	.megamenu .mainmenu > li > div{
+		left: -110%;
+	}
+	.megamenu .mainmenu > li:hover > div{
+		left: -100%;
+	}
+	.megamenu .menu-category-image{
+		float: right;
+		margin: 0 5px 0 0;
+	}
+	.megamenu .subcat a:before{
+		float: right;
+		.rotation(-180deg);
+	}
+	.kuler-finder-result .left{
+		float: left;
+	}
+	.kuler-finder-result .col-md-7{
+		text-align: right;
+		float: right;
+	}
+	.megamenu .sublevel li{
+		text-align: right;
+	}
+	.megamenu .menu-category-image{
+		float: left;
+	}
+}

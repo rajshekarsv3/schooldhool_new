@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>KulerThemes</id>
+	<author>kulerthemes.com</author>
+
+  <!-- Override Response -->
+	<file path="system/library/response.php">
+		<operation>
+			<search position="after"><![CDATA[if ($this->output) {]]></search>
+			<add><![CDATA[
+			if (class_exists('Kuler'))
+			{
+			  $this->output = Kuler::getInstance()->processOutput($this->output);
+			}
+			]]></add>
+		</operation>
+	</file>
+
+  <file path="system/engine/front.php">
+    <operation>
+      <search position="after"><![CDATA[$this->registry = $registry;]]></search>
+      <add><![CDATA[
+      if (!defined('DIR_CATALOG'))
+      {
+        $this->addPreAction(new Action('module/kuler_cp/startup'));
+      }
+      ]]></add>
+    </operation>
+  </file>
+
+  <file path="catalog/controller/module/kuler_cp.php">
+    <operation>
+      <search position="replace"><![CDATA[$this->overrideResponse();]]></search>
+      <add><![CDATA[]]></add>
+    </operation>
+  </file>
+  <!-- / Override Response -->
+
+  <!-- Extra Theme Position for built-in modules of OpenCart -->
+  <file path="admin/view/template/module/" name="*.tpl">
+    <operation error="skip">
+      <search position="replace" offset="19"><![CDATA[<?php if ($module['position'] == 'content_top') { ?>]]></search>
+      <add><![CDATA[
+			  <?php
+			    $this->load->model('kuler/common');
+			    $is_kuler_theme = $this->model_kuler_common->isKulerTheme($this->config->get('config_template'));
+
+          if (!$is_kuler_theme) { ?>
+            <?php if ($module['position'] == 'content_top') { ?>
+              <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
+              <?php } else { ?>
+              <option value="content_top"><?php echo $text_content_top; ?></option>
+              <?php } ?>
+              <?php if ($module['position'] == 'content_bottom') { ?>
+              <option value="content_bottom" selected="selected"><?php echo $text_content_bottom; ?></option>
+              <?php } else { ?>
+              <option value="content_bottom"><?php echo $text_content_bottom; ?></option>
+              <?php } ?>
+              <?php if ($module['position'] == 'column_left') { ?>
+              <option value="column_left" selected="selected"><?php echo $text_column_left; ?></option>
+              <?php } else { ?>
+              <option value="column_left"><?php echo $text_column_left; ?></option>
+              <?php } ?>
+              <?php if ($module['position'] == 'column_right') { ?>
+              <option value="column_right" selected="selected"><?php echo $text_column_right; ?></option>
+              <?php } else { ?>
+              <option value="column_right"><?php echo $text_column_right; ?></option>
+            <?php } ?>
+          <?php } else {
+            $positions = $this->model_kuler_common->getPositions();
+
+            $position_html = '';
+
+            foreach ($positions as $position => $name) {
+			        $position_html .= '<option value="' . $position . '"'. ($module['position'] == $position ? ' selected="selected"' : '') .'>'. $name . '</option>';
+            }
+
+            echo $position_html;
+          }
+			  ?>
+			]]></add>
+    </operation>
+    <operation>
+      <search position="replace" offset="3"><![CDATA[html += '      <option value="content_top"><?php echo $text_content_top; ?></option>';]]></search>
+      <add><![CDATA[
+        <?php
+			    $this->load->model('kuler/common');
+			    $is_kuler_theme = $this->model_kuler_common->isKulerTheme($this->config->get('config_template'));
+
+          if (!$is_kuler_theme) { ?>
+        ?>
+          html += '      <option value="content_top"><?php echo $text_content_top; ?></option>';
+          html += '      <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
+          html += '      <option value="column_left"><?php echo $text_column_left; ?></option>';
+          html += '      <option value="column_right"><?php echo $text_column_right; ?></option>';
+        <?php } else {
+          $positions = $this->model_kuler_common->getPositions();
+
+          $position_html = '';
+          foreach ($positions as $position => $name) {
+            $position_html .= 'html += \'<option value="' . $position . '">'. $name . '</option>\';';
+          }
+
+          echo $position_html;
+        }
+        ?>
+      ]]></add>
+    </operation>
+  </file>
+  <!-- / Extra Theme Position for built-in modules of OpenCart -->
+
+  <!-- All Positions -->
+  <file path="catalog/controller/common/" name="content_top.php,content_bottom.php,column_left.php,column_right.php">
+    <operation>
+      <search position="replace"><![CDATA[$module['layout_id'] == $layout_id]]></search>
+      <add><![CDATA[($module['layout_id'] == $layout_id || $module['layout_id'] == -1)]]></add>
+    </operation>
+  </file>
+  <!-- / All Positions -->
+
+</modification>

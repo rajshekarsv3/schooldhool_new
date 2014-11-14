@@ -1,0 +1,10 @@
+<div class="fileupload image-selector-container">
+	<input id="{{input_id}}" type="hidden" />
+	<div class="fileupload-new thumbnail" ng-click="browse()" style="cursor: pointer">
+		<img ng-src="{{thumb}}" />
+	</div>
+	<p class="clearfix" ng-if="hasButton">
+		<button class="btn btn-default btn-xs" ng-click="browse()">Browse</button>
+		<button class="btn btn-default btn-xs" ng-click="clear()">Clear</button>
+	</p>
+</div>

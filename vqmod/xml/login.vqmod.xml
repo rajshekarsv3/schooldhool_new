@@ -1,0 +1,26 @@
+<modification>
+	<id>login using mobile number</id>
+    <version>0.1.4</version>
+    <vqmver>2.3.0</vqmver>
+	<author>Aditya</author>
+	<file name="system/library/customer.php">
+		<operation error="abort">
+			<search position="before">
+				<![CDATA[
+			        if ($customer_query->num_rows) {
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+					if ($override) {
+			            $customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer where (LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' OR telephone = '" . $email . "') AND status = '1'");
+		            } else {
+			            $customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE (LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' OR telephone = '" . $email . "') AND (password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('" . $this->db->escape($password) . "'))))) OR password = '" . $this->db->escape(md5($password)) . "') AND status = '1' AND approved = '1'");
+		            }
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+</modification>

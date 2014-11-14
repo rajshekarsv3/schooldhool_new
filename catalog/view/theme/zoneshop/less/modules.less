@@ -1,0 +1,871 @@
+@import (reference) "elements";
+/*--------------------------------------------
+Carousel
+----------------------------------------------*/
+.jcarousel-skin-opencart{
+	.jcarousel-direction-rtl {
+		direction: rtl;
+	}
+	.jcarousel-clip {
+		overflow: hidden;
+		width: 100%;
+	}
+	.jcarousel-clip-horizontal {
+	}
+	.jcarousel-item {
+		text-align: center;
+		padding: 40px 0;
+		border-right: 1px solid #EEEEEE;
+	}
+	.jcarousel-item-horizontal {
+		margin-left: 0;
+	}
+	.jcarousel-direction-rtl .jcarousel-item-horizontal {
+		margin-left: 10px;
+		margin-right: 0;
+	}
+	.jcarousel-item-placeholder {
+		background: #fff;
+		color: #000;
+	}
+	.jcarousel-prev,
+	.jcarousel-next{
+		position: absolute;
+		top: -50px;
+		cursor: pointer;
+		z-index: 20;
+		right: 0;
+		.transi;
+	}
+	.jcarousel-prev{
+		right: 33px;
+	}
+	.jcarousel-prev:before{
+		.iconfont;
+		content: "\f107";
+		font-size: 20px;
+		color: #fff;
+		width: 32px;
+		height: 32px;
+		display: block;
+		line-height: 32px;
+		text-align: center;
+		right: 33px;
+		.transi;
+	}
+	.jcarousel-next:before{
+		.iconfont;
+		content: "\f106";
+		font-size: 20px;
+		color: #ffffff;
+		width: 32px;
+		height: 32px;
+		display: block;
+		line-height: 32px;
+		text-align: center;
+		.transi;
+	}
+}
+/*--------------------------------------------
+Kuler Filter
+----------------------------------------------*/
+.kuler-filter{
+	.buttons{
+		margin-top: 20px;
+	}
+	.ui-slider-horizontal .ui-slider-handle{
+		.rounded(0);
+		width: 10px;
+		background: #444;
+		border: none;
+	}
+	.ui-slider-horizontal .ui-slider-range{
+		background: #aaaaaa;
+		.rounded(0);
+		border: none;
+	}
+	.ui-slider-horizontal{
+		.rounded(0);
+		margin: 0 10px;
+	}
+	select{
+		width: 100%;
+	}
+}
+/*--------------------------------------------
+Kuler Layer Slider
+----------------------------------------------*/
+.tp-bullets.simplebullets.square-old .bullet{
+	background: none !important;
+	border: 2px solid #A1CF9C;
+	display: inline-block;
+	width: 15px !important;
+	height: 15px !important;
+	border-radius: 10px;
+	margin: 0 6px;
+}
+.tp-bullets.simplebullets.square-old .bullet.selected{
+	border-color: #ffffff;
+}
+/*--------------------------------------------
+Kuler Slide
+----------------------------------------------*/
+.kuler-slides{
+	margin-bottom: 30px;
+	.jcarousel-skin-opencart .jcarousel-container-horizontal{
+		padding: 0;
+		background-color: #fff;
+	}
+	.jcarousel-item{
+		padding: 0;
+	}
+	.box-heading{
+		margin-bottom: 0;
+		span{
+			color: #ffffff;
+			font-weight: 400;
+			text-transform: uppercase;
+			float: none;
+			font-size: 15px;
+			padding: 18px 22px;
+			display: inline-block;
+			background-color: @skin1-bg;
+		}
+	}
+	.product-grid .col-lg-3{
+		margin-top: 10px;
+	}
+}
+/*--------------------------------------------
+Kuler Accordion
+----------------------------------------------*/
+.kuler-accordion {
+	margin-bottom: 50px;
+	.item-title {
+		color: #ffffff;
+		cursor: pointer;
+		font-size: 16px;
+		background-color: #aaaaaa;
+		span {
+			display: inline-block;
+			line-height: 48px;
+			padding-left: 15px;
+			padding-right: 15px;
+			user-select: none;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+		}
+		&.selected {
+			background-color: #444444;
+		}
+	}
+	.box-product {
+		background-color: #fff;
+		margin: 0;
+		.clear;
+	}
+	.right{
+		padding-bottom: 15px;
+	}
+	.product-list > div{
+		margin: 0;
+		font-size: 0;
+		padding: 0;
+		&:hover{
+			border-color: transparent;
+		}
+	}
+	.item-content {
+		background-color: #fff;
+	}
+	.product-list .rating{
+		display: inline-block;
+	}
+}
+/* HORIZONTAL */
+.kuler-accordion {
+	.horizontal {
+		border: 0;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		position: relative;
+		box-sizing: content-box;
+		background-color: #fff;
+		-webkit-perspective: 1000;
+		-webkit-backface-visibility: hidden;
+		-webkit-tap-highlight-color: transparent;
+	}
+	.horizontal .item-title,
+	.horizontal .item-content {
+		z-index: 1;
+		overflow: hidden;
+		position: absolute;
+	}
+	.horizontal .item-title {
+		top: 0;
+		left: 0;
+		z-index: 2;
+		text-align: right;
+		border-bottom: 1px solid #ffffff;
+		transform: translateX(-100%) rotate(-90deg);
+		-moz-transform: translateX(-100%) rotate(-90deg);
+		-webkit-transform: translateX(-100%) rotate(-90deg);
+		transform-origin: right top;
+		-moz-transform-origin: right top;
+		-webkit-transform-origin: right top;
+		-webkit-backface-visibility: hidden; /* fixes chrome bug */
+	}
+	.horizontal .item-content {
+		top: -1px;
+		margin: 0;
+		border-top: none;
+		border-left: none;
+	}
+}
+/* IE */
+.kuler-accordion{
+	.horizontal.box-content.ie .item-title,
+	.horizontal.box-content.ie .item-title span {
+		filter: none;
+		-ms-filter: none;
+		-ms-transform: none
+	}
+	.horizontal.box-content.ie7 .item-title {
+		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3)
+	}
+	.horizontal.box-content.ie8 .item-title {
+		-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)"
+	}
+	.horizontal.box-content.ie9 .item-title {
+		-ms-transform: translateX(-100%) rotate(-90deg);
+		-ms-transform-origin: right top
+	}
+}
+/* VERTICAL */
+.kuler-accordion {
+	.vertical .item-content {
+		overflow: hidden;
+	}
+}
+/*custom */
+.kuler-accordion{
+	.box-product > div:hover a img{
+		.translate(0,0);
+	}
+}
+/*--------------------------------------------
+Kuler Testimonial
+----------------------------------------------*/
+.kt-module{
+	.device{
+		width: auto;
+		border: none;
+		margin: 0 auto;
+		height: auto;
+		padding: 0;
+		text-align: center;
+	}
+	.swiper-slide{
+		img{
+			.rounded(100%);
+			margin-bottom: 20px;
+		}
+	}
+	.swiper-container{
+		padding-bottom: 30px;
+		.pagination{
+			border: none;
+			padding: 0;
+		}
+	}
+	.slide-content{
+		font-size: 15px;
+		padding: 0 20px;
+		position: relative;
+		&:before{
+			.iconfont;
+			content: "\f10d";
+			position: absolute;
+			left: 5px;
+		}
+	}
+	.writer_name{
+		display: block;
+		font-size: 14px;
+		font-weight: 600;
+	}
+	.swiper-pagination-switch{
+		.box-shadow(none);
+		background: none;
+		border: 2px solid #A1CF9C;
+	}
+	.swiper-active-switch{
+		border-color: #333;
+	}
+}
+.swiper-container{
+	width: 300px;
+	height: auto;
+	@media @md {
+		width: 600px;
+	}
+	@media @lg {
+		width: 900px;
+	}
+}
+/*--------------------------------------------
+Kuler Tabs
+----------------------------------------------*/
+.ui-tabs .ui-tabs-panel{
+	padding: 0;
+}
+.kuler-tabs {
+	background: none;
+	border: none;
+	margin-bottom: 30px;
+	padding: 0;
+	.clear;
+	.ui-tabs-hide{
+		display: none;
+	}
+	.box-heading {
+		position: relative;
+		text-transform: uppercase;
+		padding: 0;
+		background: none;
+		border: none;
+		li {
+			display: inline-block;
+			padding-right: 0;
+			vertical-align: top;
+			font-size: 18px;
+			float: none;
+			border: none;
+			background: none;
+			&.ui-state-default{
+				display: none;
+			}
+			&.ui-state-active{
+				display: inline-block;
+				a{
+					background-color: @skin1-bg;
+					color: #ffffff;
+				}
+			}
+		}
+		.btn-tabs-toggle {
+			top: 0;
+			left: 0;
+			z-index: 1;
+			width: 100%;
+			height: 100%;
+			cursor: pointer;
+			background: none;
+			position: absolute;
+			&:before{
+				display: none;
+			}
+		}
+	}
+	.collapse{
+		.ui-state-default{
+			display: none;
+		}
+	}
+	.expand{
+		li{
+			display: inline-block;
+			z-index: 2;
+		}
+		.ui-state-default{
+			display: inline-block;
+		}
+		.ui-state-active{
+			z-index: 0;
+		}
+	}
+}
+/*--------------------------------------------
+Kuler Contact Form
+----------------------------------------------*/
+.kcf-module{
+	.box{
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+	input,
+	textarea{
+		width: 100%;
+		border: none;
+		background-color: #F7F7F7;
+		padding: 15px;
+	}
+	button{
+		background: #000;
+		font-weight: 600;
+		padding: 10px 25px;
+		border: none;
+		text-transform: uppercase;
+		font-size: 13px;
+	}
+	p{
+		margin-bottom: 10px;
+	}
+	.footer-top &{
+		margin: 50px 0;
+	}
+	.box-heading{
+		text-align: left;
+		&:before{
+			display: none;
+		}
+	}
+}
+/*--------------------------------------------
+Kuler Blog Manager
+----------------------------------------------*/
+/*recent article*/
+.blog{
+	.breadcrumb{
+		margin-bottom: 0;
+	}
+	#content{
+		background-color: #fff;
+		.article{
+			border-top: 1px solid #EEEEEE;
+			overflow: hidden;
+		}
+		.article-extra-info{
+			margin: 0 -15px 0 -15px;
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			.read-more{
+				padding: 10px 20px;
+				border-right: 1px solid #EEEEEE;
+				display: inline-block;
+			}
+		}
+		.col-md-8{
+			padding-top: 15px;
+			position: static;
+			padding-bottom: 40px;
+		}
+		.col-md-4{
+			padding: 0;
+		}
+	}
+}
+#content .articles {
+	li {
+		.image {
+			overflow: hidden;
+			position: relative;
+			margin-bottom: 15px;
+		}
+		a{
+			display: block;
+			font-size: 18px;
+			font-weight: 500;
+			&:hover{
+				color:#222;
+			}
+		}
+		img{
+			.transi;
+		}
+		span{
+			color: #666;
+		}
+	}
+	li:hover img {
+		-webkit-transform: scale(2);
+		-o-transform: scale(2);
+		transform: scale(2);
+	}
+}
+.kbm-recent-article{
+	.box-content{
+		border-top: 3px solid #313133;
+		.home &{
+			padding-top: 30px;
+		}
+	}
+	.image{
+		position: relative;
+		.home &{
+			margin-bottom: 10px;
+		}
+		&:before{
+			content: '';
+			background-color: rgba(0, 0, 0, .2);
+			.absolute-center;
+			visibility: hidden;
+			opacity: 0;
+			.transi;
+		}
+	}
+	.image:hover{
+		.link,&:before{
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+	.article-title{
+		font-size: 18px;
+		color: #313133;
+		font-weight: 500;
+		margin-bottom: 6px;
+	}
+	.link{
+		.is-Translated();
+		visibility: hidden;
+		opacity: 0;
+		text-align: center;
+		.transi;
+		a{
+			font-size: 42px !important;
+			color: #ffffff !important;
+		}
+	}
+}
+.single-blog{
+	.box{
+		background-color: #fff;
+		padding: 15px;
+	}
+}
+/*related articles*/
+.related-articles {
+	ul{
+		margin: 0;
+		width: auto;
+		li{
+			margin: 0 0 5px 20px;
+			list-style: circle;
+		}
+		a{
+			font-size: 14px !important;
+		}
+	}
+	h4 {
+		font-size: 18px;
+		font-weight: 600;
+		color: #222222;
+	}
+}
+/*sidebar settings*/
+.col-md-4{
+	.articles{
+		li {
+			a{
+				display: block;
+			}
+			p{
+				padding: 0 0 15px;
+				margin: 0;
+				font-size: 13px;
+			}
+		}
+	}
+}
+.article {
+	display: inline-block;
+	vertical-align: top;
+	background-color: #fff;
+	.article-image{
+		margin-right: 0 !important;
+	}
+}
+.article-list + .pagination,
+.comment-list + .pagination {
+	border-top: 1px solid #EEEEEE;
+	margin-top: 0 !important;
+}
+.comment-container {
+	padding: 0;
+}
+.comment-stats {
+	padding: 10px 20px;
+	background-color: #EEEEEE;
+	font-weight: 600;
+	font-size: 18px;
+}
+.article-extra-info {
+	font-size: 0;
+	color: #b2b2b2;
+	margin-bottom: 20px;
+	time,a{
+		font-size: 13px;
+		margin-right: 15px;
+		font-weight: 300;
+	}
+	.author:before {
+		.kulerfont;
+		content: "\e60e";
+		font-size: 14px;
+		margin-right: 3px;
+	}
+	.category:before {
+		.kulerfont;
+		content: "\e610";
+		font-size: 14px;
+		margin-right: 5px;
+	}
+}
+.comment-stats:before {
+	.kulerfont;
+	content: "\e612";
+	margin-right: 3px;
+}
+.article-extra-info time:before {
+	.kulerfont;
+	content: "\e60c";
+	font-size: 14px;
+	margin-right: 3px;
+}
+.comment-list .comment {
+	padding: 0;
+	margin: 0;
+}
+.author-name {
+	font-size: 18px;
+	font-weight: 600;
+}
+.article-header {
+	h2 {
+		margin-bottom: 10px;
+		text-transform: none;
+		font-size: 18px;
+		font-weight: 500;
+	}
+}
+.article-content p{
+	font-weight: 300;
+}
+.kbm-latest-comment ul,
+.kbm-latest-comment li {
+	margin: 0;
+}
+.kbm-latest-comment li {
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #EEEEEE;
+}
+.kbm-latest-comment li a {
+	color: #444;
+}
+.comment-container {
+	background-color: transparent;
+}
+#form-comment .validator input,
+#form-comment .validator img{
+	vertical-align: middle;
+}
+.comment-container{
+	padding: 0 !important;
+	background: none !important;
+}
+#form-comment{
+	td{
+		padding: 10px 10px 10px 0;
+	}
+}
+
+/*--------------------------------------------
+Kuler Showcase
+----------------------------------------------*/
+.kuler-showcase-module{
+	margin-bottom: 30px;
+	position: relative;
+	.tab-heading{
+		span{
+			background-color: #fff;
+			color: #313133;
+			cursor: pointer;
+			.transi;
+		}
+		.active{
+			background-color: #313133;
+			color: #ffffff;
+		}
+	}
+	.nav{
+		span{
+			font-size: 0;
+			position: absolute;
+			top: 15px;
+			right: 0;
+			&:before{
+				.iconfont;
+				content: "\f106";
+				font-size: 20px;
+				color: #ffffff;
+				width: 32px;
+				height: 32px;
+				display: block;
+				line-height: 32px;
+				text-align: center;
+				.transi;
+			}
+			&.prev{
+				right: 33px;
+				&:before{
+					content: "\f107";
+				}
+			}
+		}
+	}
+}
+//deal
+.product-deal-countdown{
+	margin-bottom: 20px;
+	>span >span{
+		display: inline-block;
+		width: 60px;
+		line-height: 1;
+		text-align: center;
+		border: 1px solid #eeeeee;
+		padding: 10px 0;
+		margin-right: 5px;
+		margin-bottom: 5px;
+		color: #313133;
+		span{
+			display: block;
+			margin-bottom: 4px;
+			&:first-child{
+				font-weight: 500;
+				font-size: 20px;
+			}
+		}
+	}
+}
+.sidebar{
+	.product-deal-countdown {
+		margin-bottom: 0;
+		> span > span {
+			width: 55px;
+			padding: 5px 0;
+		}
+	}
+	.inf,.rating{
+		display: none;
+	}
+	.kuler-showcase-module [class*="col"]{
+		text-align: center;
+		margin-bottom: 10px;
+	}
+	.product-grid > div{
+		border-bottom: 1px solid #eeeeee;
+	}
+}
+.showcase{
+	.item.html{
+		padding: 0;
+	}
+	.container{
+		background-color: #fff;
+	}
+}
+.swiper-container {
+	margin:0 auto;
+	position:relative;
+	overflow:hidden;
+	-webkit-backface-visibility:hidden;
+	-moz-backface-visibility:hidden;
+	-ms-backface-visibility:hidden;
+	-o-backface-visibility:hidden;
+	backface-visibility:hidden;
+	/* Fix of Webkit flickering */
+	z-index:1;
+}
+.swiper-wrapper {
+	position:relative;
+	width:100%;
+	-webkit-transition-property:-webkit-transform, left, top;
+	-webkit-transition-duration:0s;
+	-webkit-transform:translate3d(0px,0,0);
+	-webkit-transition-timing-function:ease;
+
+	-moz-transition-property:-moz-transform, left, top;
+	-moz-transition-duration:0s;
+	-moz-transform:translate3d(0px,0,0);
+	-moz-transition-timing-function:ease;
+
+	-o-transition-property:-o-transform, left, top;
+	-o-transition-duration:0s;
+	-o-transform:translate3d(0px,0,0);
+	-o-transition-timing-function:ease;
+	-o-transform:translate(0px,0px);
+
+	-ms-transition-property:-ms-transform, left, top;
+	-ms-transition-duration:0s;
+	-ms-transform:translate3d(0px,0,0);
+	-ms-transition-timing-function:ease;
+
+	transition-property:transform, left, top;
+	transition-duration:0s;
+	transform:translate3d(0px,0,0);
+	transition-timing-function:ease;
+
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+.swiper-free-mode > .swiper-wrapper {
+	-webkit-transition-timing-function: ease-out;
+	-moz-transition-timing-function: ease-out;
+	-ms-transition-timing-function: ease-out;
+	-o-transition-timing-function: ease-out;
+	transition-timing-function: ease-out;
+	margin: 0 auto;
+}
+.swiper-slide {
+	float: left;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+/* IE10 Windows Phone 8 Fixes */
+.swiper-wp8-horizontal {
+	-ms-touch-action: pan-y;
+}
+.swiper-wp8-vertical {
+	-ms-touch-action: pan-x;
+}
+
+//Your custom styles, here you need to specify container's and slide's sizes, pagination, etc.
+.swiper-container {
+	/* Specify Swiper's Size: */
+
+	width: 100%;
+}
+.swiper-slide {
+	/* Specify Slides's Size: */
+
+	width: 100%;
+	height: 100%;
+	cursor: -webkit-grab;
+}
+.swiper-slide-active {
+	/* Specific active slide styling: */
+}
+.swiper-slide-visible {
+	/* Specific visible slide styling: */
+
+}
+//Pagination Styles
+.swiper-pagination-switch {
+	/* Stylize pagination button: */
+
+}
+.swiper-active-switch {
+	/* Specific active button style: */
+
+}
+.swiper-visible-switch {
+	/* Specific visible button style: */
+
+}

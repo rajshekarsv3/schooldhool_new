@@ -1,0 +1,16 @@
+/*--------------------------------------------------------------------------/
+* @Author		KulerThemes.com http://www.kulerthemes.com
+* @Copyright	Copyright (C) 2012 - 2013 KulerThemes.com. All rights reserved.
+* @License		KulerThemes.com Proprietary License
+/---------------------------------------------------------------------------*/
+
+/* Slides */
+.kuler-slides .box {
+	overflow: hidden;
+}
+.kuler-slides .jcarousel-list {
+	overflow: visible !important;
+}
+.kuler-slides .jcarousel-item {
+	margin: 0;
+}

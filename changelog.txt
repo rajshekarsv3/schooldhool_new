@@ -1,0 +1,24 @@
+v0.1.4
+- FIXED: Minor performance tweaks
+- FIXED: Fixed error when using non-standard status names.
+- TESTED: We’ve confirmed the module works find with Professional HTML Email Template module
+
+v0.1.3
+- ADDED: Customers can now opt-in/out to receive order status notifications/marketing messages. This can be disabled in the back-end
+- ADDED: Store language tabs to events tab/order statuses
+- ADDED: Ability to create a new Textplode group from your OpenCart customers instead of having to create the group first on Textplode
+- ADDED: Customers with mobile numbers stored on their account stat
+- FIXED: Saving templates to order statuses on stores that had multiple languages
+- FIXED: Issue where saving and editing the module would sometimes not keep you on your selected tab
+- CHANGED: Merged the general and account tabs into one tab
+- TESTED: We’ve confirmed the module works fine with bulk order status update modules
+
+v0.1.2
+- Bug fixes
+- Calculate button changes to alert box
+
+v0.1.1
+- Bug fixes
+
+v0.1
+- Initial release

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>KulerThemes - Kuler Blog Manager</id>
+  <author>kulerthemes.com</author>
+  <!-- SEO -->
+  <file path="catalog/controller/common/seo_url.php">
+    <operation>
+      <search position="before"><![CDATA[public function rewrite($link) ]]></search>
+      <add><![CDATA[
+        protected function isKbmInstalledAndKulerTheme() {
+          static $installed;
+
+          if ($installed === null) {
+            $this->load->model('setting/extension');
+            $this->load->model('kuler/common');
+
+            $module_items = $this->model_setting_extension->getExtensions('module');
+            $modules = array();
+
+            foreach ($module_items as $module_item) {
+              $modules[] = $module_item['code'];
+            }
+
+            $installed = in_array('kbm', $modules) && $this->model_kuler_common->isKulerTheme($this->config->get('config_template'));
+          }
+
+          return $installed;
+        }
+      ]]></add>
+    </operation>
+
+    <operation>
+      <search position="after"><![CDATA[$parts = explode('/', $this->request->get['_route_']);]]></search>
+      <add><![CDATA[
+        if ($this->isKbmInstalledAndKulerTheme()) {
+          $this->load->model('module/kbm');
+          $blog_virtual = $this->model_module_kbm->getSetting('category', 'virtual_directory_name');
+          $article_url_suffix = $this->model_module_kbm->getSetting('article', 'url_suffix');
+        }
+      ]]></add>
+    </operation>
+    <operation>
+      <search position="after"><![CDATA[foreach ($parts as $part) {]]></search>
+      <add><![CDATA[
+        if ($this->isKbmInstalledAndKulerTheme()) {
+          if (isset($this->request->get['kbm_home']) && $this->request->get['kbm_home'] && $article_url_suffix) {
+            $part = str_replace($article_url_suffix, '', $part);
+          }
+        }
+      ]]></add>
+    </operation>
+    <operation>
+      <search position="after"><![CDATA[$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($part) . "'");]]></search>
+      <add><![CDATA[
+        if ($this->isKbmInstalledAndKulerTheme()) {
+          // Check home page of Kuler Blog Manager
+          if ($part == $blog_virtual) {
+            $this->request->get['kbm_home'] = true;
+          }
+        }
+      ]]></add>
+    </operation>
+    <operation>
+      <search position="after" offset="1"><![CDATA[$this->request->get['information_id'] = $url[1];]]></search>
+      <add><![CDATA[
+        if ($this->isKbmInstalledAndKulerTheme()) {
+          // Kuler Blog Manager
+          if ($url[0] == 'kbm_category_id') {
+            if (!isset($this->request->get['kbm_path'])) {
+              $this->request->get['kbm_path'] = $url[1];
+            } else {
+              $this->request->get['kbm_path'] .= '_' . $url[1];
+            }
+          }
+
+          if ($url[0] == 'kbm_article_id') {
+            $this->request->get['kbm_article_id'] = $url[1];
+          }
+        }
+      ]]></add>
+    </operation>
+    <operation>
+      <search position="before"><![CDATA[if (isset($this->request->get['product_id'])) {]]></search>
+      <add><![CDATA[
+        if ($this->isKbmInstalledAndKulerTheme()) {
+          if (isset($this->request->get['kbm_path']) || isset($this->request->get['kbm_article_id'])) {
+            $this->request->get['kbm_home'] = false;
+          }
+        }
+      ]]></add>
+    </operation>
+    <operation>
+      <search position="after"><![CDATA[$this->request->get['route'] = 'product/manufacturer/info';]]></search>
+      <add><![CDATA[
+        } else if ($this->isKbmInstalledAndKulerTheme() && isset($this->request->get['kbm_home']) && $this->request->get['kbm_home']) {
+          $this->request->get['route'] = 'module/kbm';
+        } else if ($this->isKbmInstalledAndKulerTheme() && isset($this->request->get['kbm_article_id'])) {
+          $this->request->get['article_id'] = $this->request->get['kbm_article_id'];
+          $this->request->get['path'] = isset($this->request->get['kbm_path']) ? $this->request->get['kbm_path'] : '';
+          $this->request->get['route'] = 'module/kbm/article';
+        } else if ($this->isKbmInstalledAndKulerTheme() && isset($this->request->get['kbm_path'])) {
+          $this->request->get['kbm_path'] = $this->request->get['kbm_path'];
+          $this->request->get['route'] = 'module/kbm/category';
+      ]]></add>
+    </operation>
+    <operation>
+      <search position="before"><![CDATA[foreach ($data as $key => $value) {]]></search>
+      <add><![CDATA[
+        if ($this->isKbmInstalledAndKulerTheme()) {
+          $this->load->model('module/kbm');
+          $blog_virtual_enabled = $this->model_module_kbm->getSetting('category', 'virtual_directory');
+          $article_url_suffix = $this->model_module_kbm->getSetting('article', 'url_suffix');
+
+          $kbm_path = true;
+        }
+      ]]></add>
+    </operation>
+    <operation>
+      <search position="before"><![CDATA[} elseif ($key == 'path') {]]></search>
+      <add><![CDATA[
+        } else if ($this->isKbmInstalledAndKulerTheme() && $blog_virtual_enabled && $data['route'] == 'module/kbm' || $data['route'] == 'module/kbm/index'){
+          $url = '/' . $this->model_module_kbm->getSetting('category', 'virtual_directory_name') . '/';
+        } else if ($this->isKbmInstalledAndKulerTheme() && $blog_virtual_enabled && ($data['route'] == 'module/kbm/category' || $data['route'] == 'module/kbm/article') && $key == 'kbm_path') {
+          $virtual_exclude_categories = $this->model_module_kbm->getSetting('category', 'virtual_exclude_category');
+
+          $categories = explode('_', $value);
+
+          foreach ($categories as $category) {
+            if (in_array($category, $virtual_exclude_categories)) {
+              $kbm_path = false;
+              $url = '';
+              break;
+            }
+
+            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = 'kbm_category_id=" . (int)$category . "'");
+
+            if ($query->num_rows) {
+              if (empty($url)) {
+                $url = '/' . $this->model_module_kbm->getSetting('category', 'virtual_directory_name');
+              }
+
+              $url .= '/' . $query->row['keyword'];
+            }
+          }
+
+          if ($kbm_path) {
+            unset($data[$key]);
+          }
+        } else if ($this->isKbmInstalledAndKulerTheme() && $blog_virtual_enabled && $data['route'] == 'module/kbm/article') {
+          if ($kbm_path) {
+            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape('kbm_article_id=' . (int)$value) . "'");
+
+            if ($query->num_rows) {
+              if (empty($url)) {
+                $url = '/' . $this->model_module_kbm->getSetting('category', 'virtual_directory_name');
+              }
+
+              $url .= '/' . $query->row['keyword'];
+
+              if ($article_url_suffix) {
+                $url .= $article_url_suffix;
+              }
+
+              unset($data[$key]);
+            }
+          }
+      ]]></add>
+    </operation>
+  </file>
+  <!-- / SEO -->
+
+  <!-- LAYOUT OVERRIDE -->
+  <file path="catalog/controller/common/" name="column_left.php,column_right.php,content_top.php,content_bottom.php">
+    <operation>
+      <search position="before"><![CDATA[protected function index() {]]></search>
+      <add><![CDATA[
+        protected function isKbmInstalledAndKulerTheme() {
+          static $installed;
+
+          if ($installed === null) {
+            $this->load->model('setting/extension');
+
+            $module_items = $this->model_setting_extension->getExtensions('module');
+            $modules = array();
+
+            foreach ($module_items as $module_item) {
+              $modules[] = $module_item['code'];
+            }
+
+            $installed = in_array('kbm', $modules);
+          }
+
+          return $installed;
+        }
+      ]]></add>
+    </operation>
+
+    <operation>
+      <search position="before" index="1"><![CDATA[if (!$layout_id) {]]></search>
+      <add><![CDATA[
+        if ($this->isKbmInstalledAndKulerTheme()) {
+          $this->load->model('module/kbm');
+
+          if ($route == 'module/kbm/category' && isset($this->request->get['kbm_path'])) {
+            $paths = explode('_', $this->request->get['kbm_path']);
+
+            $layout_id = $this->model_module_kbm->getCategoryLayoutId(end($paths));
+          }
+
+          if ($route == 'module/kbm/article' && isset($this->request->get['kbm_article_id'])) {
+            $layout_id = $this->model_module_kbm->getArticleLayoutId($this->request->get['kbm_article_id']);
+          }
+        }
+      ]]></add>
+    </operation>
+  </file>
+  <!-- / LAYOUT OVERRIDE -->
+
+</modification>

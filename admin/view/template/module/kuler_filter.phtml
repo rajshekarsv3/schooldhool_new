@@ -1,0 +1,490 @@
+<?php echo $header; ?>
+	<style>
+		.tree ul {
+			list-style: none;
+			margin-left: 20px;
+			padding: 0
+		}
+
+		.tree ul li {
+			margin: 5px 0;
+		}
+	</style>
+    <div id="content" class="kuler-module">
+    <div class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+        <?php } ?>
+    </div>
+    <?php if ($error_warning) { ?>
+        <div class="warning"><?php echo $error_warning; ?></div>
+    <?php } ?>
+    <div class="box">
+        <div class="heading clearafter">
+            <h1><img src="./view/kulercore/images/logos/kuler_filter.png" alt="Kuler Filter Module" /></h1>
+            <div class="buttons">
+                <a onclick="$('#form').submit();" class="button save-settings"><?php echo $button_save; ?></a>
+                <a href="<?php echo $cancel; ?>" class="button cancel-settings"><?php echo $button_cancel; ?></a>
+            </div>
+        </div>
+        <div class="content">
+            <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+                <input type="hidden" name="tab" id="tab" value="<?php echo $tab ?>" />
+                <input type="hidden" name="op" id="op" />
+                <ul class="vtabs">
+                    <?php $module_row = 1; ?>
+                    <?php foreach ($modules as $module) { ?>
+                        <li>
+                            <a href="#tab-module-<?php echo $module_row; ?>" id="module-<?php echo $module_row; ?>">
+                                <?php echo $module['main_title']; ?>
+                                <img class="remove-element" src="view/kulercore/images/icons/icon-delete.png" alt="" onclick="$('.vtabs a:first').trigger('click'); $('#module-<?php echo $module_row; ?>').remove(); $('#tab-module-<?php echo $module_row; ?>').remove(); return false;" />
+                            </a>
+                        </li>
+                        <?php $module_row++; ?>
+                    <?php } ?>
+                    <li><span class="module-add"><?php echo $button_add_module; ?>&nbsp;<img class="add-element" src="view/kulercore/images/icons/icon-add.png" alt="" onclick="addModule();" /></span></li>
+                </ul>
+                <?php $module_row = 1; ?>
+                <?php foreach ($modules as $module) { ?>
+                    <?php $module_title = isset($module['title']) && $module['title'] ? $module['title'] : $text_module . ' ' . $module_row ?>
+                    <div id="tab-module-<?php echo $module_row; ?>" class="vtabs-content">
+                        <table class="form">
+                            <tr>
+                                <td><?php echo $entry_status; ?></td>
+                                <td width="10">
+                                    <div class="kuler-switch-btn">
+                                        <input type='hidden' name='kuler_filter_module[<?php echo $module_row; ?>][status]' value='0' />
+                                        <input type="checkbox" name="kuler_filter_module[<?php echo $module_row; ?>][status]"<?php echo $module['status'] ? ' checked="checked"' : '' ?>  value="1">
+                                        <span class="kuler-switch-btn-holder"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $entry_showtitle; ?></td>
+                                <td width="10">
+                                    <div class="kuler-switch-btn">
+                                        <input type='hidden' name='kuler_filter_module[<?php echo $module_row; ?>][show_title]' value='0' />
+                                        <input type="checkbox" name="kuler_filter_module[<?php echo $module_row; ?>][show_title]"<?php echo $module['show_title'] ? ' checked="checked"' : '' ?>  value="1">
+                                        <span class="kuler-switch-btn-holder"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $entry_title; ?></td>
+                                <td>
+                                    <?php foreach ($languages as $language) { ?>
+                                        <p>
+                                            <input type="text" name="kuler_filter_module[<?php echo $module_row; ?>][title][<?php echo $language['language_id']; ?>]" value="<?php echo $module['title'][$language['language_id']]; ?>"<?php if ($language['language_id'] == $config_admin_language_id) { ?> class="ModuleTitle" data-shortcode="#ModuleShortCode_<?php echo $module_row; ?>"<?php } ?> />
+                                            <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" />
+                                        </p>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                            <tr>
+	                            <td><?php echo $entry_shortcode; ?></td>
+	                            <td>
+		                            <input type="text" id="ModuleShortCode_<?php echo $module_row; ?>" class="ModuleShortCode" name="kuler_filter_module[<?php echo $module_row; ?>][shortcode]" value="<?php if (isset($module['shortcode'])) echo $module['shortcode']; ?>" readonly="readonly" size="40" />
+	                            </td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $entry_layout; ?></td>
+                                <td><select name="kuler_filter_module[<?php echo $module_row; ?>][layout_id]">
+                                        <?php foreach ($layouts as $layout) { ?>
+                                            <?php if ($layout['layout_id'] == $module['layout_id']) { ?>
+                                                <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                                            <?php } else { ?>
+                                                <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select></td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $entry_position; ?></td>
+                                <td><select name="kuler_filter_module[<?php echo $module_row; ?>][position]">
+		                                <?php foreach ($positions as $position => $name) { ?>
+			                                <option value="<?php echo $position; ?>"<?php if ($position == $module['position']) echo ' selected="selected"'; ?>><?php echo $name; ?></option>
+		                                <?php } ?>
+                                    </select></td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $entry_category; ?></td>
+                                <td width="10">
+                                    <div class="kuler-switch-btn">
+                                        <input type='hidden' name='kuler_filter_module[<?php echo $module_row; ?>][category]' value='0' />
+                                        <input type="checkbox" name="kuler_filter_module[<?php echo $module_row; ?>][category]"<?php echo $module['category'] ? ' checked="checked"' : '' ?>  value="1">
+                                        <span class="kuler-switch-btn-holder"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $entry_manufacture; ?></td>
+                                <td width="10">
+                                    <div class="kuler-switch-btn">
+                                        <input type='hidden' name='kuler_filter_module[<?php echo $module_row; ?>][manufacture]' value='0' />
+                                        <input type="checkbox" name="kuler_filter_module[<?php echo $module_row; ?>][manufacture]"<?php echo $module['manufacture'] ? ' checked="checked"' : '' ?>  value="1">
+                                        <span class="kuler-switch-btn-holder"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $entry_attribute; ?></td>
+                                <td width="10">
+                                    <div class="kuler-switch-btn">
+                                        <input type='hidden' name='kuler_filter_module[<?php echo $module_row; ?>][attribute]' value='0' />
+                                        <input type="checkbox" name="kuler_filter_module[<?php echo $module_row; ?>][attribute]"<?php echo $module['attribute'] ? ' checked="checked"' : '' ?>  value="1">
+                                        <span class="kuler-switch-btn-holder"></span>
+                                    </div>
+                                </td>
+	                        </tr>
+                            <tr>
+                                <td><?php echo $__['entry_option_filter']; ?></td>
+                                <td>
+                                    <div class="kuler-switch-btn">
+                                        <input type='hidden' name='kuler_filter_module[<?php echo $module_row; ?>][option]' value='0' />
+                                        <input type="checkbox" name="kuler_filter_module[<?php echo $module_row; ?>][option]"<?php if (!isset($module['option']) || $module['option']) echo ' checked="checked"' ?>  value="1">
+                                        <span class="kuler-switch-btn-holder"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tr>
+                            <tr>
+                                <td><?php echo $entry_price_filter; ?></td>
+                                <td>
+                                    <div class="kuler-switch-btn">
+                                        <input type="hidden" name="kuler_filter_module[<?php echo $module_row; ?>][price_filter]" value="0"/>
+                                        <input type="checkbox" name="kuler_filter_module[<?php echo $module_row; ?>][price_filter]" value="1"<?php if (isset($module['price_filter']) && $module['price_filter']) echo ' checked="checked"'; ?> />
+                                        <span class="kuler-switch-btn-holder"></span>
+                                    </div>
+                                </td>
+                            </tr>
+	                        <tr>
+		                        <td><?php echo $__['entry_exclude_attributes']; ?></td>
+		                        <td>
+			                        <button type="button" class="button toggler" data-target="#attr-tree-<?php echo $module_row; ?>"><?php echo $__['button_show_hide_attributes']; ?></button>
+			                        <div class="tree" id="attr-tree-<?php echo $module_row; ?>" style="display: none;">
+				                        <?php if ($attr_groups) { ?>
+				                        <ul>
+					                       <?php foreach ($attr_groups as $attr_group) { ?>
+					                       <li>
+						                       <label for="attr-group-<?php echo $module_row ?>-<?php echo $attr_group['attribute_group_id']; ?>"><input type="checkbox" id="attr-group-<?php echo $module_row ?>-<?php echo $attr_group['attribute_group_id']; ?>" name="kuler_filter_module[<?php echo $module_row; ?>][exclude_attr_group_id][]" value="<?php echo $attr_group['attribute_group_id']; ?>"<?php if (isset($module['exclude_attr_group_id']) && in_array($attr_group['attribute_group_id'], $module['exclude_attr_group_id'])) echo ' checked="checked"'; ?> /> <?php echo $attr_group['name']; ?></label>
+						                       <?php if (!empty($attr_group['attrs'])) { ?>
+						                       <ul>
+							                       <?php foreach ($attr_group['attrs'] as $attr) { ?>
+							                       <li><label for="attr-<?php echo $module_row ?>-<?php echo $attr['attribute_id'] ?>"><input type="checkbox" id="attr-<?php echo $module_row ?>-<?php echo $attr['attribute_id'] ?>" name="kuler_filter_module[<?php echo $module_row; ?>][exclude_attr_id][]" value="<?php echo $attr['attribute_id']; ?>"<?php if (isset($module['exclude_attr_id']) && in_array($attr['attribute_id'], $module['exclude_attr_id'])) echo ' checked="checked"'; ?> /> <?php echo $attr['name']; ?></label></li>
+							                       <?php } ?>
+						                       </ul>
+						                       <?php } ?>
+					                       </li>
+					                       <?php } ?>
+				                        </ul>
+				                        <?php } ?>
+			                        </div>
+		                        </td>
+	                        </tr>
+	                        <tr>
+		                        <td><?php echo $__['entry_exclude_options']; ?></td>
+		                        <td>
+			                        <button type="button" class="button toggler" data-target="#opt-tree-<?php echo $module_row; ?>"><?php echo $__['button_show_hide_options']; ?></button>
+
+			                        <div class="tree" id="opt-tree-<?php echo $module_row; ?>" style="display: none;">
+			                        <?php if ($options) { ?>
+				                        <ul>
+					                        <?php foreach ($options as $option) { ?>
+						                        <li>
+							                        <label for="option-<?php echo $module_row ?>-<?php echo $option['option_id']; ?>"><input type="checkbox" id="option-<?php echo $module_row ?>-<?php echo $option['option_id']; ?>" name="kuler_filter_module[<?php echo $module_row; ?>][exclude_opt_id][]" value="<?php echo $option['option_id']; ?>"<?php if (isset($module['exclude_opt_id']) && in_array($option['option_id'], $module['exclude_opt_id'])) echo ' checked="checked"'; ?> /> <?php echo $option['name']; ?></label>
+							                        <?php if (!empty($option['option_values'])) { ?>
+								                        <ul>
+									                        <?php foreach ($option['option_values'] as $option_value) { ?>
+										                        <li><label for="opt-<?php echo $module_row ?>-value-<?php echo $option_value['option_value_id'] ?>"><input type="checkbox" id="opt-<?php echo $module_row ?>-value-<?php echo $option_value['option_value_id'] ?>" name="kuler_filter_module[<?php echo $module_row; ?>][exclude_opt_value_id][]" value="<?php echo $option_value['option_value_id']; ?>"<?php if (isset($module['exclude_opt_value_id']) && in_array($option_value['option_value_id'], $module['exclude_opt_value_id'])) echo ' checked="checked"'; ?> /> <?php echo $option_value['name']; ?></label></li>
+									                        <?php } ?>
+								                        </ul>
+							                        <?php } ?>
+						                        </li>
+					                        <?php } ?>
+				                        </ul>
+			                        <?php } ?>
+				                    </div>
+		                        </td>
+	                        </tr>
+                            <tr>
+                                <td><?php echo $entry_price; ?></td>
+                                <td>
+                                    <input type="text" name="kuler_filter_module[<?php echo $module_row; ?>][price_min]" value="<?php if (isset($module['price_min'])) echo $module['price_min']; else echo $default['price_min']; ?>" size="10" placeholder="Min Price" />
+                                    <input type="text" name="kuler_filter_module[<?php echo $module_row; ?>][price_max]" value="<?php if (isset($module['price_max'])) echo $module['price_max']; else echo $default['price_max']; ?>" size="10" placeholder="Max Price" />
+
+                                    <?php if (isset($error_price_range[$module_row])) { ?>
+                                        <span class="error"><?php echo $error_price_range[$module_row]; ?></span>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $entry_currency; ?></td>
+                                <td><select name="kuler_filter_module[<?php echo $module_row; ?>][currency]">
+                                        <?php foreach ($currencies as $currency) { ?>
+                                            <?php if ($currency['code'] == $module['currency']) { ?>
+                                                <option value="<?php echo $currency['code']; ?>" selected="selected"><?php echo $currency['code']; ?></option>
+                                            <?php } else { ?>
+                                                <option value="<?php echo $currency['code']; ?>"><?php echo $currency['code']; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select></td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $entry_sort_order; ?></td>
+                                <td><input type="text" name="kuler_filter_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <?php $module_row++; ?>
+                <?php } ?>
+            </form>
+        </div>
+    </div>
+    </div>
+    <link rel="stylesheet" type="text/css" href="view/kulercore/css/kulercore.css" media="all">
+<script type="text/javascript">
+        var module_row = <?php echo $module_row; ?>;
+        /**
+         * @todo Event for add new module
+         */
+        function addModule() {
+            html  = '<div id="tab-module-' + module_row + '" class="vtabs-content">';
+            html += '  <table class="form">';
+
+            html += '    <tr>';
+            html += '      <td><?php echo $entry_status; ?></td>';
+            html += '      <td width="10"><div class="kuler-switch-btn">';
+            html += '        <input type="hidden" name="kuler_filter_module[' + module_row + '][status]" value="0" />';
+            html += '        <input type="checkbox" name="kuler_filter_module[' + module_row + '][status]" value="1" checked="checked" />';
+            html += '        <span class="kuler-switch-btn-holder"></span></div></td>';
+            html += '    </tr>';
+
+            html += '    <tr>';
+            html += '      <td><?php echo $entry_showtitle; ?></td>';
+            html += '      <td width="10"><div class="kuler-switch-btn">';
+            html += '        <input type="hidden" name="kuler_filter_module[' + module_row + '][show_title]" value="0" />';
+            html += '        <input type="checkbox" name="kuler_filter_module[' + module_row + '][show_title]" value="1" checked="checked" />';
+            html += '        <span class="kuler-switch-btn-holder"></span></div></td>';
+            html += '    </tr>';
+
+	        html += '    <tr>';
+	        html += '        <td><?php echo $entry_title; ?></td>';
+	        html += '        <td>';
+	        html += '            <?php foreach ($languages as $language) { ?>';
+	        html += '                <p>';
+	        html += '                    <input type="text" name="kuler_filter_module['+ module_row +'][title][<?php echo $language['language_id']; ?>]"<?php if ($language['language_id'] == $config_admin_language_id) { ?> class="ModuleTitle" data-shortcode="#ModuleShortCode_'+ module_row +'"<?php } ?> />';
+	        html += '                    <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" />';
+	        html += '                </p>';
+	        html += '            <?php } ?>';
+	        html += '        </td>';
+	        html += '    </tr>';
+
+	        html += '    <tr>';
+	        html += '        <td><?php echo $entry_shortcode; ?></td>';
+	        html += '        <td>';
+	        html += '            <input type="text" id="ModuleShortCode_'+ module_row +'" class="ModuleShortCode" name="kuler_filter_module['+ module_row +'][shortcode]" readonly="readonly" size="40" />';
+	        html += '        </td>';
+	        html += '    </tr>';
+
+            html += '    <tr>';
+            html += '      <td><?php echo $entry_layout; ?></td>';
+            html += '      <td><select name="kuler_filter_module[' + module_row + '][layout_id]">';
+            <?php foreach ($layouts as $layout) { ?>
+            html += '           <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
+            <?php } ?>
+            html += '      </select></td>';
+            html += '    </tr>';
+
+	        html += '    <tr>';
+	        html += '        <td><?php echo $entry_position; ?></td>';
+	        html += '        <td><select name="kuler_filter_module['+ module_row +'][position]">';
+	        html += '                <?php foreach ($positions as $position => $name) { ?>';
+	        html += '                    <option value="<?php echo $position; ?>"><?php echo $name; ?></option>';
+	        html += '                <?php } ?>';
+	        html += '            </select></td>';
+	        html += '    </tr>';
+
+            html += '    <tr>';
+            html += '      <td><?php echo $entry_category; ?></td>';
+            html += '      <td width="10"><div class="kuler-switch-btn">';
+            html += '        <input type="hidden" name="kuler_filter_module[' + module_row + '][category]" value="0" />';
+            html += '        <input type="checkbox" name="kuler_filter_module[' + module_row + '][category]" value="1" checked="checked" />';
+            html += '        <span class="kuler-switch-btn-holder"></span></div></td>';
+            html += '    </tr>';
+
+            html += '    <tr>';
+            html += '      <td><?php echo $entry_manufacture; ?></td>';
+            html += '      <td width="10"><div class="kuler-switch-btn">';
+            html += '        <input type="hidden" name="kuler_filter_module[' + module_row + '][manufacture]" value="0" />';
+            html += '        <input type="checkbox" name="kuler_filter_module[' + module_row + '][manufacture]" value="1" checked="checked" />';
+            html += '        <span class="kuler-switch-btn-holder"></span></div></td>';
+            html += '    </tr>';
+
+            html += '    <tr>';
+            html += '      <td><?php echo $entry_attribute ; ?></td>';
+            html += '      <td width="10"><div class="kuler-switch-btn">';
+            html += '        <input type="hidden" name="kuler_filter_module[' + module_row + '][attribute]" value="0" />';
+            html += '        <input type="checkbox" name="kuler_filter_module[' + module_row + '][attribute]" value="1" checked="checked" />';
+            html += '        <span class="kuler-switch-btn-holder"></span></div></td>';
+            html += '    </tr>';
+
+            html += '<tr>';
+            html += '    <td><?php echo $__['entry_option_filter']; ?></td>';
+            html += '    <td>';
+            html += '        <div class="kuler-switch-btn">';
+            html += '            <input type="hidden" name="kuler_filter_module['+ module_row +'][option]" value="0" />';
+            html += '            <input type="checkbox" name="kuler_filter_module['+ module_row +'][option]" checked="checked" value="1">';
+            html += '            <span class="kuler-switch-btn-holder"></span>';
+            html += '        </div>';
+            html += '    </td>';
+            html += '</tr>';
+
+	        html += '    <tr>';
+	        html += '        <td><?php echo $__['entry_exclude_attributes']; ?></td>';
+	        html += '        <td>';
+	        html += '            <button type="button" class="button toggler" data-target="#attr-tree-'+ module_row +'"><?php echo $__['button_show_hide_attributes']; ?></button>';
+	        html += '            <div class="tree" id="attr-tree-'+ module_row +'" style="display: none;">';
+	        html += '                <?php if ($attr_groups) { ?>';
+	        html += '                <ul>';
+	        html += '                   <?php foreach ($attr_groups as $attr_group) { ?>';
+	        html += '                   <li>';
+	        html += '                       <label for="attr-group-'+ module_row +'-<?php echo $attr_group['attribute_group_id']; ?>"><input type="checkbox" id="attr-group-'+ module_row +'-<?php echo $attr_group['attribute_group_id']; ?>" name="kuler_filter_module['+ module_row +'][exclude_attr_group_id][]" value="<?php echo $attr_group['attribute_group_id']; ?>" /> ' + <?php echo $this->jsEncode($attr_group['name']); ?> + '</label>';
+	        html += '                       <?php if (!empty($attr_group['attrs'])) { ?>';
+	        html += '                       <ul>';
+	        html += '	                       <?php foreach ($attr_group['attrs'] as $attr) { ?>';
+	        html += '	                       <li><label for="attr-'+ module_row +'-<?php echo $attr['attribute_id'] ?>"><input type="checkbox" id="attr-'+ module_row +'-<?php echo $attr['attribute_id'] ?>" name="kuler_filter_module['+ module_row +'][exclude_attr_id][]" value="<?php echo $attr['attribute_id']; ?>" /> ' + <?php echo $this->jsEncode($attr['name']); ?> + '</label></li>';
+	        html += '	                       <?php } ?>';
+	        html += '                       </ul>';
+	        html += '                       <?php } ?>';
+	        html += '                   </li>';
+	        html += '                   <?php } ?>';
+	        html += '                </ul>';
+	        html += '                <?php } ?>';
+	        html += '            </div>';
+	        html += '        </td>';
+	        html += '    </tr>';
+	        html += '    ';
+	        html += '    <tr>';
+	        html += '        <td><?php echo $__['entry_exclude_options']; ?></td>';
+	        html += '        <td>';
+	        html += '            <button type="button" class="button toggler" data-target="#opt-tree-'+ module_row +'"><?php echo $__['button_show_hide_options']; ?></button>';
+	        html += '';
+	        html += '            <div class="tree" id="opt-tree-'+ module_row +'" style="display: none;">';
+	        html += '            <?php if ($options) { ?>';
+	        html += '                <ul>';
+	        html += '                    <?php foreach ($options as $option) { ?>';
+	        html += '                        <li>';
+	        html += '	                        <label for="option-'+ module_row +'-<?php echo $option['option_id']; ?>"><input type="checkbox" id="option-'+ module_row +'-<?php echo $option['option_id']; ?>" name="kuler_filter_module['+ module_row +'][exclude_opt_id][]" value="<?php echo $option['option_id']; ?>" /> ' + <?php echo $this->jsEncode($option['name']); ?> + '</label>';
+	        html += '	                        <?php if (!empty($option['option_values'])) { ?>';
+	        html += '		                        <ul>';
+	        html += '			                        <?php foreach ($option['option_values'] as $option_value) { ?>';
+	        html += '				                        <li><label for="opt-value-'+ module_row +'-<?php echo $option_value['option_value_id'] ?>"><input type="checkbox" id="opt-value-'+ module_row +'-<?php echo $option_value['option_value_id'] ?>" name="kuler_filter_module['+ module_row +'][exclude_opt_value_id][]" value="<?php echo $option_value['option_value_id']; ?>" /> ' + <?php echo $this->jsEncode($option_value['name']); ?> + '</label></li>';
+	        html += '			                        <?php } ?>';
+	        html += '		                        </ul>';
+	        html += '	                        <?php } ?>';
+	        html += '                        </li>';
+	        html += '                    <?php } ?>';
+	        html += '                </ul>';
+	        html += '            <?php } ?>';
+	        html += '            </div>';
+	        html += '        </td>';
+	        html += '    </tr>';
+
+            html += '<tr>';
+            html += '    <td><?php echo $entry_price_filter; ?></td>';
+            html += '    <td>';
+            html += '        <div class="kuler-switch-btn">';
+            html += '            <input type="hidden" name="kuler_filter_module['+ module_row +'][price_filter]" value="0"/>';
+            html += '            <input type="checkbox" name="kuler_filter_module['+ module_row +'][price_filter]" value="1"<?php if (!isset($default['price_filter']) || $default['price_filter']) echo ' checked="checked"'; ?> />';
+            html += '            <span class="kuler-switch-btn-holder"></span>';
+            html += '        </div>';
+            html += '    </td>';
+            html += '</tr>';
+
+            html += '<tr>';
+            html += '    <td><?php echo $entry_price; ?></td>';
+            html += '    <td>';
+            html += '        <input type="text" name="kuler_filter_module['+ module_row +'][price_min]" value="<?php echo $default['price_min']; ?>" size="10" placeholder="Min Price" />';
+            html += '        <input type="text" name="kuler_filter_module['+ module_row +'][price_max]" value="<?php echo $default['price_max']; ?>" size="10" placeholder="Max Price" />';
+            html += '    </td>';
+            html += '</tr>';
+
+            html += '    <tr>';
+            html += '      <td><?php echo $entry_currency; ?></td>';
+            html += '      <td><select name="kuler_filter_module[' + module_row + '][currency]">';
+            <?php foreach ($currencies as $currency) { ?>
+            html += '           <option value="<?php echo $currency['code']; ?>"><?php echo addslashes($currency['code']); ?></option>';
+            <?php } ?>
+            html += '      </select></td>';
+            html += '    </tr>';
+
+            html += '    <tr>';
+            html += '      <td><?php echo $entry_sort_order; ?></td>';
+            html += '      <td><input type="text" name="kuler_filter_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
+            html += '    </tr>';
+
+            html += '  </table>';
+            html += '</div>';
+
+            $('#form').append(html);
+
+            $('.module-add').before('<a href="#tab-module-' + module_row + '" id="module-' + module_row + '"><?php echo $__['tab_module']; ?> ' + module_row + '&nbsp;<img class="remove-element" src="view/kulercore/images/icons/icon-delete.png" alt="" onclick="$(\'.vtabs a:first\').trigger(\'click\'); $(\'#module-' + module_row + '\').remove(); $(\'#tab-module-' + module_row + '\').remove(); return false;" /></a>');
+
+            $('.vtabs a').click(function() {
+                $('#tab').val($(this).attr('href'));
+            }).tabs();
+
+            $('#module-' + module_row).trigger('click');
+
+            module_row++;
+        }
+
+        $('.vtabs a').click(function() {
+            $('#tab').val($(this).attr('href'));
+        }).tabs();
+        <?php if($tab) { ?>
+        $('.vtabs a[href="<?php echo $tab ?>"]').click();
+        <?php } ?>
+
+    // Toggle tree
+    $('body').on('click', '.toggler', function () {
+	    $(this.dataset.target).slideToggle();
+    });
+
+    // Toggle child checkbox according to parent child box
+    $('body').on('click', '.tree label', function () {
+	    var $this = $(this),
+		    $check = $this.find('input[type="checkbox"]'),
+		    $childCheck = $this.parent('li').find('input[type="checkbox"]');
+
+	    $childCheck.prop('checked', $check.prop('checked'));
+    });
+
+    (function () {
+        var moduleName = '<?php echo $moduleName; ?>';
+
+        function generateShortCode(moduleName, moduleTitle) {
+	        var shortcode;
+
+	        moduleName = moduleName.toLowerCase();
+	        moduleTitle = moduleTitle.toLowerCase();
+
+	        moduleTitle = moduleTitle.replace(/\s+/g, '_');
+
+	        return '[' + moduleName + ' ' + moduleTitle + ']';
+        }
+
+        // Update the short code when the module title change
+        $('#content').on('keyup change', '.ModuleTitle', function () {
+	        $($(this).data('shortcode')).val(generateShortCode(moduleName, this.value));
+        });
+
+        // Select the shortcode when focus
+        $('#content').on('click', '.ModuleShortCode', function () {
+	        this.select();
+        });
+
+        $('.ModuleTitle').trigger('change');
+    })();
+</script>
+<?php echo $footer; ?>

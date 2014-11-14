@@ -1,0 +1,90 @@
+<?php
+$kuler = Kuler::getInstance();
+$kuler->language->load('kuler/zoneshop');
+?>
+<div class="megamenu vertical-menu">
+	<h3 class="box-heading">
+		<span><?php echo $kuler->language->get('text_vertical_menu_title'); ?></span>
+	</h3>
+  <ul class="mainmenu">
+    <?php foreach ($items as $item_index => $item) { ?>
+        <li class="item<?php if (count($item['children'])) echo ' parent' ?> <?php echo $item['type'] ?>">
+	      <?php if (!empty($item['title_icon'])) { ?>
+	      <img class="icon" src="<?php echo $item['title_icon']; ?>" alt="<?php echo $item['title']; ?>" />
+	      <?php } ?>
+          <a <?php if ($item['enable_hyperlink'] && $item['href']) echo 'href="' . $item['href'] . '"'; ?><?php if ($item['enable_hyperlink'] && $item['href'] && $item['new_tab']) echo ' target="_blank"'; ?>><?php echo $item['title']; ?></a>
+          <?php if (!empty($item['children'])) { ?><span class="btn-expand-menu"></span><?php } ?>
+          <?php if (!empty($item['children'])) { ?>
+            <div class="dropdown-container">
+              <div class="container">
+              <?php if ($item['type'] == 'custom') { ?>
+                <ul class="row sublevel">
+                  <?php foreach ($item['children'] as $item2) { ?>
+                    <li class="col-md-3 item"><a
+                        href="<?php echo $item2['href']; ?>"<?php if ($item['sub_new_tab']) echo ' target="_blank"'; ?>><?php echo $item2['title']; ?></a>
+                    </li>
+                  <?php } ?>
+                </ul>
+              <?php } else if ($item['type'] == 'product') { ?>
+                <div class="box-product product-grid">
+                  <?php foreach ($item['children'] as $item2) { ?>
+                    <?php echo $this->loadChromeTemplate($item, $item2); ?>
+                  <?php } ?>
+                </div>
+              <?php } else if ($item['type'] == 'category') { ?>
+                <ul class="row sublevel">
+                  <?php foreach ($item['children'] as $item2) { ?>
+                    <li class="col-md-12 item<?php if (in_array($item2['category_id'], $paths)) echo ' active'; ?>">
+                      <a href="<?php echo $item2['href']; ?>"
+                         class="menu-category-title<?php if (in_array($item2['category_id'], $paths)) echo ' current'; ?>"><?php echo $item2['title']; ?></a>
+
+                      <?php if ($item['description'] && $item2['description'] != '..') { ?>
+                        <p class="menu-category-description"><?php echo $item2['description']; ?></p>
+                      <?php } ?>
+
+                      <?php if ($item['image']) { ?>
+                        <img class="menu-category-image <?php echo $item['image_position']; ?>"
+                             src="<?php echo $item2['thumb']; ?>" alt="<?php echo $item2['title']; ?>"/>
+                      <?php } ?>
+
+                      <?php if (!empty($item2['children'])) { ?>
+                        <?php $subcat_offset = $item['category_image_width'] + 30; ?>
+                        <ul
+                          class="subcat"<?php if ($item['image_position'] == 'float-left') echo " style=\"margin-left: {$subcat_offset}px\""; ?><?php if ($item['image_position'] == 'float-right') echo " style=\"margin-right: {$subcat_offset}px\""; ?>>
+                          <?php foreach ($item2['children'] as $item3) { ?>
+                            <li><a href="<?php echo $item3['href']; ?>"><?php echo $item3['title']; ?></a></li>
+                          <?php } ?>
+                        </ul>
+                      <?php } ?>
+                    </li>
+                  <?php } ?>
+                </ul>
+              <?php } else if ($item['type'] == 'html') { ?>
+                <div class="dropdown">
+                  <?php echo $item['html']; ?>
+                </div>
+              <?php } ?>
+            </div>
+            </div>
+          <?php } ?>
+        </li>
+      <?php } ?>
+  </ul>
+</div>
+<script>
+	$(function () {
+		var href = document.location.toString();
+
+		$('.mainmenu a').each(function () {
+			if (this.href && href == this.href) {
+				$(this).parents('li').addClass('active');
+
+				$('.mainmenu > li:eq(0)').removeClass('active');
+			}
+		});
+
+		if (!$('.mainmenu .active').length) {
+			$('.mainmenu > li:eq(0)').addClass('active');
+		}
+	});
+</script>

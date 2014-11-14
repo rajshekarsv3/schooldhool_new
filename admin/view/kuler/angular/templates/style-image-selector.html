@@ -1,0 +1,39 @@
+<div class="fileupload image-selector-container">
+	<input id="{{input_id}}" type="hidden" ng-model="image.path" value="{{image.path}}" />
+	<div class="fileupload-new thumbnail">
+		<img ng-src="{{thumb}}" />
+	</div>
+	<p class="clearfix">
+		<button class="btn btn-default btn-xs" ng-click="browse()">Browse</button>
+		<button class="btn btn-default btn-xs" ng-click="clear()">Clear</button>
+	</p>
+	<p ng-if="image.path">
+		<label class="control-label">Background repeat</label>
+		<select class="input-sm" ng-model="image.repeat">
+			<option>no-repeat</option>
+			<option value="repeat">repeat</option>
+			<option value="repeat-x">repeat-x</option>
+			<option value="repeat-y">repeat-y</option>
+			<option value="inherit">inherit</option>
+		</select>
+	</p>
+	<p ng-if="image.path">
+		<label class="control-label">Background Position</label>
+		<select class="input-sm" ng-model="image.position">
+			<option value="left top">left top</option>
+			<option value="left bottom">left bottom</option>
+			<option value="right top">right top</option>
+			<option value="right bottom">right bottom</option>
+			<option value="center top">center top</option>
+			<option value="center bottom">center bottom</option>
+			<option value="center center">center center</option>
+		</select>
+	</p>
+	<p ng-if="image.path">
+		<label class="control-label">Background Attachment</label>
+		<select class="input-sm" ng-model="image.attachment">
+			<option value="inherit">inherit</option>
+			<option value="fixed">fixed</option>
+		</select>
+	</p>
+</div>

@@ -1,0 +1,6 @@
+<div style="display: inline-block">
+	<div class="input-group" ng-repeat="language in languages" style="margin-top: 5px;">
+		<input type="text" class="form-control" ng-model="input[language.code]" ng-change="onChange(index, input[language.code], language.code)" />
+		<span class="input-group-addon btn-white"><img ng-src="view/image/flags/{{language.image}}" title="{{language.name}}"></span>
+	</div>
+</div>

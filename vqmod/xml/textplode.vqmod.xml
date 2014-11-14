@@ -1,0 +1,536 @@
+<modification>
+	<id>Textplode</id>
+	<version>0.1.4</version>
+	<vqmver>2.3.0</vqmver>
+	<author>Web Optic</author>
+	<file name="admin/controller/sale/order.php">
+		<operation error="abort">
+			<search position="after">
+				<![CDATA[
+					if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$order = $this->model_sale_order->getOrder($this->request->get['order_id']);
+
+						if($order['customer_id'] != 0){
+							$this->load->model('textplode/textplode');
+							if($this->model_textplode_textplode->getSMS($order['customer_id'])){
+								$old_status = $this->model_textplode_textplode->getStatusNameFromId($order['order_status_id']);
+								$new_status = $this->model_textplode_textplode->getStatusNameFromId($this->request->post['order_status_id']);
+								if($old_status != $new_status){
+									if($this->model_textplode_textplode->isActive($new_status)){
+										$this->load->model('sale/customer');
+										$customer = $this->model_sale_customer->getCustomer($order['customer_id']);
+										$template = $this->model_textplode_textplode->getTemplateFromStatusName($new_status);
+										if($this->model_textplode_textplode->isValidNumber($customer['telephone'])){
+											$this->model_textplode_textplode->sendMessage($customer['telephone'], $template['template_content']);
+										}
+									}
+								}
+							}
+						}
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="admin/model/sale/order.php">
+		<operation error="abort">
+			<search position="after">
+				<![CDATA[
+					if ($data['notify']) {
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->load->model('textplode/textplode');
+						$new_status = $this->model_textplode_textplode->getStatusNameFromId($data['order_status_id']);
+						if($this->model_textplode_textplode->getSMS($order_info['customer_id'])){
+							if($this->model_textplode_textplode->isActive($new_status)){
+								$template = $this->model_textplode_textplode->getTemplateFromStatusName($new_status);
+								if($this->model_textplode_textplode->isValidNumber($order_info['telephone'])){
+									$this->model_textplode_textplode->sendMessage($order_info['telephone'], $template['template_content']);
+								}
+							}
+						}
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/controller/checkout/success.php">
+		<operation error="abort">
+			<search position="after">
+				<![CDATA[
+					$this->cart->clear();
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->load->model('textplode/textplode');
+						if($this->model_textplode_textplode->isActive('new_order')){
+							$template = $this->model_textplode_textplode->getTemplateFromStatusName('new_order');
+							$this->model_textplode_textplode->sendMessage($this->model_textplode_textplode->getAdminNumber(), $template['template_content']);
+						}
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/controller/account/success.php">
+		<operation error="abort">
+			<search position="after">
+				<![CDATA[
+					public function index() {
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->load->model('textplode/textplode');
+						if($this->model_textplode_textplode->isActive('new_customer')){
+							$template = $this->model_textplode_textplode->getTemplateFromStatusName('new_customer');
+							$this->model_textplode_textplode->sendMessage($this->model_textplode_textplode->getAdminNumber(), $template['template_content']);
+						}
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/language/english/account/register.php">
+		<operation error="skip">
+			<search position="after">
+				<![CDATA[
+					$_['text_newsletter']      = 'Newsletter';
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$_['text_sms']      = 'SMS Notifications';
+						$_['entry_sms']      = 'Enable:<br/><span class="help">Receive an SMS notification when your orders status changes</span>';
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/controller/account/register.php">
+		<operation error="skip">
+			<search position="after">
+				<![CDATA[
+					$this->data['text_newsletter'] = $this->language->get('text_newsletter');
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->data['text_sms'] = $this->language->get('text_sms');
+						$this->data['entry_sms'] = $this->language->get('entry_sms');
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+		<operation error="skip">
+			<search position="after">
+				<![CDATA[
+					$this->customer->login($this->request->post['email'], $this->request->post['password']);
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->load->model('textplode/textplode');
+						$this->model_textplode_textplode->setSmsNotifications($this->session->data['customer_id'], $this->request->post['sms_notifications']);
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+		<operation error="skip">
+			<search position="before">
+				<![CDATA[
+					if ($this->config->get('config_account_id')) {
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						if (isset($this->request->post['sms'])) {
+							$this->data['sms'] = $this->request->post['sms'];
+						} else {
+							$this->load->model('textplode/textplode');
+							$this->data['sms'] = $this->model_textplode_textplode->getOptInOut();
+
+						}
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+
+	<file name="catalog/view/theme/*/template/account/register.tpl">
+		<operation error="log">
+			<search position="before">
+				<![CDATA[
+					<?php if ($text_agree) { ?>
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					<!-- VQMOD CODE -->
+						<?php if($sms != 0){ ?>
+						    <h2><?php echo $text_sms; ?></h2>
+						    <div class="content">
+						      <table class="form">
+						        <tr>
+						          <td><?php echo $entry_sms; ?></td>
+						          <td><?php if ($sms == 1) { ?>
+						            <input type="radio" name="sms_notifications" value="1" checked="checked" />
+						            <?php echo $text_yes; ?>
+						            <input type="radio" name="sms_notifications" value="0" />
+						            <?php echo $text_no; ?>
+						            <?php } else if($sms == -1) { ?>
+						            <input type="radio" name="sms_notifications" value="1" />
+						            <?php echo $text_yes; ?>
+						            <input type="radio" name="sms_notifications" value="0" checked="checked" />
+						            <?php echo $text_no; ?>
+						            <?php } ?></td>
+						        </tr>
+						      </table>
+						    </div>
+					    <?php } ?>
+					<!-- END VQMOD -->
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/language/english/account/account.php">
+		<operation error="skip">
+			<search position="after">
+				<![CDATA[
+					$_['text_my_newsletter'] = 'Newsletter';
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$_['text_my_sms_notification'] = 'SMS Notifications';
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+		<operation error="skip">
+			<search position="after">
+				<![CDATA[
+					$_['text_newsletter']    = 'Subscribe / unsubscribe to newsletter';
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$_['text_sms']    = 'Enable / Disable SMS Notifications';
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/controller/account/account.php">
+		<operation error="skip">
+			<search position="after">
+				<![CDATA[
+					$this->data['text_my_newsletter'] = $this->language->get('text_my_newsletter');
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->data['text_my_sms_notification'] = $this->language->get('text_my_sms_notification');
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+		<operation error="skip">
+			<search position="after">
+				<![CDATA[
+					$this->data['text_newsletter'] = $this->language->get('text_newsletter');
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->data['text_sms'] = $this->language->get('text_sms');
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+		<operation error="skip">
+			<search position="after">
+				<![CDATA[
+					$this->data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->data['sms'] = $this->url->link('account/sms', '', 'SSL');
+						$this->load->model('textplode/textplode');
+						$this->data['show_sms'] = $this->model_textplode_textplode->getOptInOut();
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/*/template/account/account.tpl">
+		<operation error="log">
+			<search position="before">
+				<![CDATA[
+					<?php echo $content_bottom; ?></div>
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					<!-- VQMOD CODE -->
+						<?php if($show_sms != 0){ ?>
+					      <h2><?php echo $text_my_sms_notification; ?></h2>
+						  <div class="content">
+						    <ul>
+						      <li><a href="<?php echo $sms; ?>"><?php echo $text_sms; ?></a></li>
+						    </ul>
+						  </div>
+						<?php } ?>
+					<!-- END VQMOD -->
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/model/account/customer.php">
+		<operation error="log">
+			<search position="before">
+				<![CDATA[
+					public function getCustomer($customer_id) {
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						public function getSMS() {
+							$query = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "textplode_sms_notifications` WHERE `customer_id` = " . (int)$this->customer->getId());
+							return ($query->num_rows == 1);
+						}
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+		<operation error="log">
+			<search position="after">
+				<![CDATA[
+					$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->load->model('textplode/textplode');
+						if(isset($data['sms_notifications'])){
+							$this->model_textplode_textplode->setSmsNotifications((int)$customer_id, $this->db->escape($data['sms_notifications']));
+						}else{
+							$this->model_textplode_textplode->setSmsNotifications((int)$customer_id, 0);
+						}
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="admin/language/english/sale/customer.php">
+		<operation error="log">
+			<search position="after">
+				<![CDATA[
+					$_['column_email']          = 'E-Mail';
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$_['column_telephone']          = 'Phone';
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+
+	</file>
+	<file name="admin/controller/sale/customer.php">
+		<operation error="log">
+			<search position="after">
+				<![CDATA[
+					'email'          => $result['email'],
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						'telephone'          => $result['telephone'],
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+		<operation error="log">
+			<search position="after">
+				<![CDATA[
+					$this->data['column_email'] = $this->language->get('column_email');
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->data['column_telephone'] = $this->language->get('column_telephone');
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="admin/view/template/sale/customer_list.tpl">
+		<operation error="log">
+			<search position="before">
+				<![CDATA[
+					<?php if ($sort == 'customer_group') { ?>
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					<!-- VQMOD CODE -->
+						<td class="left"><?php if ($sort == 'telephone') { ?>
+               				<a href="<?php echo $sort_telephone; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_telephone; ?></a>
+                		<?php } else { ?>
+                			<a href="<?php echo $sort_telephone; ?>"><?php echo $column_telephone; ?></a>
+                		<?php } ?></td>
+					<!-- END VQMOD -->
+				]]>
+			</add>
+		</operation>
+		<operation error="log">
+			<search position="after">
+				<![CDATA[
+					<td class="left"><?php echo $customer['email']; ?></td>
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					<!-- VQMOD CODE -->
+						<td class="left"><a href="<?php echo $this->url->link('module/textplode/send', '&number='.$customer['telephone'].'&token=' . $this->session->data['token'], 'SSL');?>"><img style="width:20px;margin-right: 5px;" src="//www.textplode.com/_img/logos/1-mobile.png"/></a><?php echo $customer['telephone']; ?> </td>
+					<!-- END VQMOD -->
+				]]>
+			</add>
+		</operation>
+		<operation error="log">
+			<search position="after">
+				<![CDATA[
+					<td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" /></td>
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					<!-- VQMOD CODE -->
+						<td><input type="text" disabled="DISABLED" name="filter_telephone" value="" /></td>
+					<!-- END VQMOD -->
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/language/english/checkout/checkout.php">
+		<operation error="log">
+			<search position="after">
+				<![CDATA[
+					$_['entry_newsletter']               = 'I wish to subscribe to the %s newsletter.';
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$_['entry_sms_notifications']               = 'I wish receive SMS Notifications from %s.';
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/controller/checkout/register.php">
+		<operation error="log">
+			<search position="after">
+				<![CDATA[
+					$this->data['entry_newsletter'] = sprintf($this->language->get('entry_newsletter'), $this->config->get('config_name'));
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->data['entry_sms_notifications'] = sprintf($this->language->get('entry_sms_notifications'), $this->config->get('config_name'));
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+		<operation error="log">
+			<search position="after">
+				<![CDATA[
+					$this->session->data['account'] = 'register';
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->load->model('textplode/textplode');
+						$this->model_textplode_textplode->setSmsNotifications((int)$this->customer->getId(), $this->request->post['sms_notifications']);
+						if($this->model_textplode_textplode->isActive('new_customer')){
+							$template = $this->model_textplode_textplode->getTemplateFromStatusName('new_customer');
+							$this->model_textplode_textplode->sendMessage($this->model_textplode_textplode->getAdminNumber(), $template['template_content']);
+						}
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+		<operation error="log">
+			<search position="after">
+				<![CDATA[
+					$this->language->load('checkout/checkout');
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					// VQMOD CODE //
+						$this->load->model('textplode/textplode');
+						$this->data['textplode_opt_in_out'] = $this->model_textplode_textplode->getOptInOut();
+					// END VQMOD //
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/*/template/checkout/register.tpl">
+		<operation error="abort">
+			<search position="before">
+				<![CDATA[
+					<?php if ($shipping_required) { ?>
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					<!-- VQMOD CODE -->
+						<?php  if($textplode_opt_in_out != 0) { ?>
+							<?php if($textplode_opt_in_out == -1) { ?>
+								<input type="checkbox" name="sms_notifications" value="1" id="sms_notifications" />
+							<?php }else if($textplode_opt_in_out == 1){ ?>
+								<input type="checkbox" name="sms_notifications" value="1" checked="CHECKED" id="sms_notifications" />
+							<?php } ?>
+
+	  						<label for="sms_notifications"><?php echo $entry_sms_notifications; ?></label>
+	  						<br />
+	  					<?php }else{ ?>
+							<input type="hidden" name="sms_notifications" value="1" id="sms_notifications" />
+	  					<?php } ?>
+					<!-- END VQMOD -->
+				]]>
+			</add>
+		</operation>
+	</file>
+</modification>

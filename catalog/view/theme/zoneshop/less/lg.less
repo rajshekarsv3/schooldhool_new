@@ -1,0 +1,271 @@
+@import (reference) "elements";
+@import (reference) "variables";
+@import (reference) "common";
+/*--------------------------------------------
+Combo CSS
+----------------------------------------------*/
+.clr{
+	.clearfix;
+}
+.icf{
+	font-family: 'FontAwesome';
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+}
+.kuler{
+	font-family: 'kuler';
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+}
+.zone{
+	font-family: 'zone';
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+}
+.tran{
+	.transition();
+}
+/*--------------------------------------------
+General
+----------------------------------------------*/
+[class*="col"]{
+	margin-bottom: 0;
+}
+.boxed{
+   #container{
+      max-width: 1250px;
+   }
+}
+.container{
+   max-width: 1200px;
+}
+/*header*/
+#header{
+	margin-bottom: 60px;
+}
+/*fixed header*/
+.fix{
+   position: fixed !important;
+   z-index:@zindex-dropdown;
+   left: 0;
+   top: 0 !important;
+   width: 100%;
+   background-color: #fff;
+   margin: 0;
+   &#header{
+      padding-top: 15px;
+   }
+   .box-shadow(3px 3px 5px rgba(0, 0, 0, 0.1));
+   .mainmenu > li{
+      > a{
+         padding: 10px 0;
+      }
+   }
+   .navigation{
+      margin-top: 15px;
+   }
+}
+#search {
+	input{
+		.transi();
+		background-color: transparent;
+		border: none;
+		width: 220px;
+	}
+}
+/*search*/
+.kuler-finder-result{
+   visibility: visible;
+   opacity: 1;
+   text-align: left;
+   background: #ffffff;
+   padding-top: 15px;
+   z-index: 9999 !important;
+   border: 1px solid transparent;
+   .rounded(0);
+	width: 380px !important;
+	left: -15px !important;
+   .name a{
+      padding: 0;
+	   color: #313133;
+	   font-weight: 500;
+	   font-size: 17px;
+   }
+	.price-old{
+		font-size: 12px;
+		color: #888888;
+	}
+   .description{
+      font-weight: 300;
+   }
+   li{
+      .clearfix;
+      margin-bottom: 15px;
+   }
+   .left{
+      width: auto;
+      padding-right: 0;
+   }
+   #load-more-container{
+      .clearfix;
+      width: 100%;
+      text-align: center;
+      text-transform: uppercase;
+	   border: none;
+	   margin: 0;
+	   a{
+		   padding: 10px 20px;
+		   display: inline-block;
+		   line-height: 1;
+		   border: 1px solid #313133;
+	   }
+      .ui-state-hover{
+         background: @skin1;
+	      border-color: transparent;
+	      color: #ffffff;
+      }
+   }
+	.col-md-7{
+		position: static;
+	}
+	.ui-menu-item{
+		padding-bottom: 15px;
+		margin-bottom: 15px;
+		border-bottom: 1px solid #EEEEEE;
+	}
+}
+.ui-menu .ui-menu-item a{
+   padding: 0;
+}
+.ui-menu .ui-menu-item{
+   margin-bottom: 15px;
+}
+//top bar
+#top-bar {
+	.links{
+		width: auto;
+		position: relative;
+		padding-right: 0;
+		text-align: left;
+	}
+	.extra{
+		width: auto;
+		display: inline-block;
+		text-align: right;
+		form {
+			border-left: 1px solid transparent;
+			border-right: 1px solid transparent;
+			line-height: 30px;
+		}
+	}
+	.col-lg-5{
+		text-align: right;
+		border-right: 1px solid #EEEEEE;
+	}
+	.col-lg-12{
+		border-right: 1px solid #EEEEEE;
+	}
+	.first-row{
+		border-bottom: 1px solid #EEEEEE;
+	}
+	.second-row{
+		.header-extra-info,
+		#cart{
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+	}
+}
+.product-grid{
+	text-align: left;
+	>div{
+		&:before{
+			content: '';
+			background-color: #EEEEEE;
+			width: 1px;
+			height: 1000px;
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: 2;
+		}
+	}
+	.name:before{
+		content: '';
+		width: 28px;
+		height: 3px;
+		background-color: #DDDDDD;
+		position: absolute;
+		top: -10px;
+		left: 0;
+	}
+	.details{
+		display: block;
+	}
+}
+.pagination{
+	border-top: 1px solid #EEEEEE;
+	margin-top: -1px;
+}
+.product-list{
+	.name{
+		padding: 20px 0 0;
+	}
+	.left{
+		text-align: left;
+		.price{
+			padding: 30px 15px 70px;
+		}
+	}
+	.inf{
+		margin-bottom: -1px;
+	}
+	.thumb{
+		padding: 15px 0;
+	}
+}
+//top
+.top{
+	padding-bottom: 30px;
+	.row{
+		margin: 0;
+	}
+	[class*='col-']{
+		padding: 0;
+	}
+	.col-md-3{
+		position: relative;
+		z-index: 2;
+	}
+	.col-md-9{
+		position: relative;
+		z-index: 1;
+	}
+}
+.sort,
+.limit{
+	text-align: right;
+}
+.category-info{
+	text-align: left;
+	.clear;
+	.image{
+		float: left;
+		margin-right: 30px;
+		border-right: 1px solid #EEEEEE;
+	}
+}
+.product-info{
+	position: relative;
+}
+.footer-top{
+	.carousel{
+		margin-bottom: 30px;
+	}
+}

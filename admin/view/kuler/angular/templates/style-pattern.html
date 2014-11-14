@@ -1,0 +1,7 @@
+<div class="pattern-container">
+	<button class="btn btn-danger btn-xs" ng-click="clear()">{{'text_clear' | _t:'Clear'}}</button>
+	<ul class="pattern-list">
+		<li ng-repeat="sourcePattern in sourcePatterns" style="background: url({{sourcePattern.image}}) no-repeat center center;" ng-click="selectPattern(sourcePattern.path);" ng-class="{active: activate(sourcePattern.path)}">
+		</li>
+	</ul>
+</div>
